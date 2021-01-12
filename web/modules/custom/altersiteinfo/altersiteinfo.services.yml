@@ -1,0 +1,8 @@
+services:
+  # This is an arbitrary name, but should be made descriptive
+  altersiteinfo.route_subscriber:
+    # Tell Drupal which class to use
+    class: 'Drupal\altersiteinfo\Routing\AlterSiteRouteSubscriber'
+    # This next code tells Drupal to use this class when # building routes.
+    tags: 
+       - { name: event_subscriber } 
