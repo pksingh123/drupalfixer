@@ -1,0 +1,5 @@
+varbase_media.settings:
+  title: 'Varbase Media settings'
+  description: 'Configuring Varbase Media.'
+  parent: varbase_core.settings_index
+  route_name: varbase_media.settings

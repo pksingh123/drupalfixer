@@ -1,0 +1,38 @@
+# Default View Modes Inventory List.
+name: view_modes
+type: list
+view_modes:
+  vertical_media_teaser_xlarge:
+    label: 'Vertical media teaser - xlarge'
+  vertical_media_teaser_large:
+    label: 'Vertical media teaser - large'
+  vertical_media_teaser_medium:
+    label: 'Vertical media teaser - medium'
+  vertical_media_teaser_small:
+    label: 'Vertical media teaser - small'
+  vertical_media_teaser_xsmall:
+    label: 'Vertical media teaser - xsmall'
+  horizontal_media_teaser_xlarge:
+    label: 'Horizontal media teaser - xlarge'
+  horizontal_media_teaser_large:
+    label: 'Horizontal media teaser - large'
+  horizontal_media_teaser_medium:
+    label: 'Horizontal media teaser - medium'
+  horizontal_media_teaser_small:
+    label: 'Horizontal media teaser - small'
+  horizontal_media_teaser_xsmall:
+    label: 'Horizontal media teaser - xsmall'
+  text_teaser_large:
+    label: 'Text teaser - large'
+  text_teaser_medium:
+    label: 'Text teaser - medium'
+  text_teaser_small:
+    label: 'Text teaser - small'
+  tout_xlarge:
+    label: 'Tout - xlarge'
+  tout_large:
+    label: 'Tout - large'
+  tout_medium:
+    label: 'Tout - medium'
+  hero_xlarge:
+    label: 'Hero - xlarge'

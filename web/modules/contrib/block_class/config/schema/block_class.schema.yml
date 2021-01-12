@@ -1,0 +1,7 @@
+block.block.*.third_party.block_class:
+  type: mapping
+  label: Block class third party settings
+  mapping:
+    classes:
+      type: string
+      label: Additional classes for the block

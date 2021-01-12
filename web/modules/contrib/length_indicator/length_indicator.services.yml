@@ -1,0 +1,3 @@
+services:
+ length_indicator.get_width_pos:
+   class: Drupal\length_indicator\GetWidthPos

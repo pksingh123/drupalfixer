@@ -1,0 +1,103 @@
+<?php
+
+/**
+ * @file
+ * Contains media_library_edit.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Field\WidgetInterface;
+use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use Drupal\Core\Render\Element;
+
+/**
+ * Implements hook_help().
+ */
+function media_library_edit_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the media_library_edit module.
+    case 'help.page.media_library_edit':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Add an edit button to the Media Library widget when an item is selected.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_field_widget_settings_summary_alter().
+ */
+function media_library_edit_field_widget_settings_summary_alter(&$summary, $context) {
+  $plugin_id = $context['widget']->getPluginId();
+
+  if ($plugin_id == 'media_library_widget') {
+    $settings = $context['widget']->getThirdPartySettings('media_library_edit');
+    if (isset($settings['show_edit']) && $settings['show_edit']) {
+      $summary[] = t('Show edit button');
+    }
+  }
+}
+
+/**
+ * Implements hook_field_widget_third_party_settings_form().
+ */
+function media_library_edit_field_widget_third_party_settings_form(WidgetInterface $plugin, FieldDefinitionInterface $field_definition, $form_mode, $form, FormStateInterface $form_state) {
+  $element = [];
+  $plugin_id = $plugin->getPluginId();
+
+  if ($plugin_id == 'media_library_widget') {
+    $settings = $plugin->getThirdPartySettings('media_library_edit');
+
+    $element['show_edit'] = [
+      '#type' => 'checkbox',
+      '#title' => t('Show edit button'),
+      '#default_value' => (isset($settings['show_edit'])) ? $settings['show_edit'] : '',
+    ];
+  }
+
+  return $element;
+}
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function media_library_edit_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
+  $plugin_id = $context['widget']->getPluginId();
+
+  if ($plugin_id == 'media_library_widget') {
+    $settings = $context['widget']->getThirdPartySettings('media_library_edit');
+    if (isset($settings['show_edit']) && $settings['show_edit']) {
+      if (isset($context['items'])) {
+        // Gets the first referenced entity.
+        // Doesn't matter which one, we just need the media edit template.
+        if ($media = $context['items']->entity) {
+          if ($media->access('update') && $edit_template = $media->getEntityType()->getLinkTemplate('edit-form')) {
+            foreach (Element::children($element['selection']) as $key) {
+              $edit_url = Url::fromUserInput(str_replace('{media}', $element['selection'][$key]['target_id']['#value'], $edit_template));
+              $element['selection'][$key]['media_edit'] = [
+                '#type' => 'link',
+                '#title' => t('Edit media item'),
+                '#url' => $edit_url,
+                '#attributes' => [
+                  'class' => [
+                    'media-library-edit__link',
+                  ],
+                  'target' => '_blank',
+                ],
+                '#attached' => [
+                  'library' => [
+                    'media_library_edit/admin',
+                  ],
+                ],
+              ];
+            }
+          }
+        }
+      }
+    }
+  }
+}

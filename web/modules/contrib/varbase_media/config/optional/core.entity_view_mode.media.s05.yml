@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.s05
+label: 'Size 05 auto'
+targetEntityType: media
+cache: true

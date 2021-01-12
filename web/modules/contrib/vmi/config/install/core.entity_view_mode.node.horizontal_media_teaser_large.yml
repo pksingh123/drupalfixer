@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.horizontal_media_teaser_large
+label: 'Horizontal media teaser - large'
+targetEntityType: node
+cache: true

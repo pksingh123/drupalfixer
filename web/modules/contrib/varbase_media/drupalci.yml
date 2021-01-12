@@ -1,0 +1,30 @@
+build:
+  assessment:
+    validate_codebase:
+      container_command:
+        commands:
+          - cd ${SOURCE_DIR}
+          - config repositories.asset composer https://asset-packagist.org
+          - require oomphinc/composer-installers-extender:~1.0
+          - require cweagans/composer-patches:~1.0
+          - require drupal/drupal-library-installer-plugin:^0.3
+          - sudo -u www-data composer config extra.enable-patching true
+          - sudo -u www-data composer config extra.composer-exit-on-patch-failure true
+          - sudo -u www-data composer config extra.installer-types.0 "npm-asset"
+          - sudo -u www-data composer config extra.installer-types.1 "bower-asset"
+          - sudo -u www-data composer config extra.installer-paths.web\/libraries\/\{\$name\} ["type:drupal-library","type:bower-asset","type:npm-asset"]
+          - sudo -u www-data composer config extra.installer-paths.web\/libraries\/slick ["npm-asset/slick-carousel"]
+          - 'sudo -u www-data composer config extra.libraries [{"name": "dropzone","package": "npm-asset/dropzone"},{"name": "blazy", "package": "npm-asset/blazy"},{"name": "slick", "package": "npm-asset/slick-carousel"}]'
+          - sudo -u www-data composer require npm-asset/dropzone:~4.0
+          - sudo -u www-data composer require npm-asset/blazy:~1.0
+          - sudo -u www-data composer require npm-asset/slick-carousel:~1.0 
+          - dir libraries'
+      phplint:
+      csslint:
+      eslint:
+      phpcs:
+    testing:
+      run_tests.functional:
+        types: 'PHPUnit-Functional'
+        testgroups: 'varbase_media'
+        suppress-deprecations: true

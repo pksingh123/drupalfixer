@@ -1,0 +1,33 @@
+.text-teaser-view-mode.anchor-all .main-content {
+  position: relative;
+}
+
+.text-teaser-view-mode.anchor-all .field--name-node-title {
+  position: static;
+}
+
+.text-teaser-view-mode.anchor-all .field--name-node-title h3 {
+  position: static;
+  margin: 0.4em 0;
+}
+
+.text-teaser-view-mode.anchor-all .field--name-node-title h3 a {
+  position: static;
+}
+
+.text-teaser-view-mode.anchor-all .field--name-node-title h3 a::before {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  overflow: hidden;
+  content: "";
+}
+
+.text-teaser-view-mode.anchor-all a {
+  position: relative;
+  z-index: 2;
+}

@@ -1,0 +1,12 @@
+type: module
+core_version_requirement: ^8.9 || ^9
+name: Sophron guesser
+description: 'Replaces Drupal core MIME type extension-based guesser with Sophron.'
+php: 7.1
+dependencies:
+  - sophron:sophron
+
+# Information added by Drupal.org packaging script on 2020-11-22
+version: '8.x-1.1'
+project: 'sophron'
+datestamp: 1606047079

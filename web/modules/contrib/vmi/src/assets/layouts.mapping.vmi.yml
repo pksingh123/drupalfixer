@@ -1,0 +1,107 @@
+# Default Layouts and mapping with view modes inventory, and default field list.
+name: layouts
+type: mapping
+for:
+  view_modes: '/src/assets/view_modes.list.yml'
+mapping:
+  vertical_media_teaser_xlarge:
+    label: 'Vertical media teaser - xlarge'
+    layout: vertical_media_teaser_xlarge
+    config_template: '/src/assets/config_templates/CONTENT_TYPE_NAME/core.entity_view_display.node.CONTENT_TYPE_NAME.vertical_media_teaser_xlarge.yml'
+    config_name: 'core.entity_view_display.node.CONTENT_TYPE_NAME.vertical_media_teaser_xlarge'
+              
+  vertical_media_teaser_large:
+    label: 'Vertical media teaser - large'
+    layout: vertical_media_teaser_large
+    config_template: '/src/assets/config_templates/CONTENT_TYPE_NAME/core.entity_view_display.node.CONTENT_TYPE_NAME.vertical_media_teaser_large.yml'
+    config_name: 'core.entity_view_display.node.CONTENT_TYPE_NAME.vertical_media_teaser_large'
+    
+  vertical_media_teaser_medium:
+    label: 'Vertical media teaser - medium'
+    layout: vertical_media_teaser_medium
+    config_template: '/src/assets/config_templates/CONTENT_TYPE_NAME/core.entity_view_display.node.CONTENT_TYPE_NAME.vertical_media_teaser_medium.yml'
+    config_name: 'core.entity_view_display.node.CONTENT_TYPE_NAME.vertical_media_teaser_medium'
+    
+  vertical_media_teaser_small:
+    label: 'Vertical media teaser - small'
+    layout: vertical_media_teaser_small
+    config_template: '/src/assets/config_templates/CONTENT_TYPE_NAME/core.entity_view_display.node.CONTENT_TYPE_NAME.vertical_media_teaser_small.yml' 
+    config_name: 'core.entity_view_display.node.CONTENT_TYPE_NAME.vertical_media_teaser_small'
+    
+  vertical_media_teaser_xsmall:
+    label: 'Vertical media teaser - xsmall'
+    layout: vertical_media_teaser_xsmall
+    config_template: '/src/assets/config_templates/CONTENT_TYPE_NAME/core.entity_view_display.node.CONTENT_TYPE_NAME.vertical_media_teaser_xsmall.yml'
+    config_name: 'core.entity_view_display.node.CONTENT_TYPE_NAME.vertical_media_teaser_xsmall'
+              
+  horizontal_media_teaser_xlarge:
+    label: 'Horizontal media teaser - xlarge'
+    layout: horizontal_media_teaser_xlarge
+    config_template: '/src/assets/config_templates/CONTENT_TYPE_NAME/core.entity_view_display.node.CONTENT_TYPE_NAME.horizontal_media_teaser_xlarge.yml'
+    config_name: 'core.entity_view_display.node.CONTENT_TYPE_NAME.horizontal_media_teaser_xlarge'
+    
+  horizontal_media_teaser_large:
+    label: 'Horizontal media teaser - large'
+    layout: horizontal_media_teaser_large
+    config_template: '/src/assets/config_templates/CONTENT_TYPE_NAME/core.entity_view_display.node.CONTENT_TYPE_NAME.horizontal_media_teaser_large.yml'
+    config_name: 'core.entity_view_display.node.CONTENT_TYPE_NAME.horizontal_media_teaser_large'
+    
+  horizontal_media_teaser_medium:
+    label: 'Horizontal media teaser - medium'
+    layout: horizontal_media_teaser_medium
+    config_template: '/src/assets/config_templates/CONTENT_TYPE_NAME/core.entity_view_display.node.CONTENT_TYPE_NAME.horizontal_media_teaser_medium.yml'
+    config_name: 'core.entity_view_display.node.CONTENT_TYPE_NAME.horizontal_media_teaser_medium'
+    
+  horizontal_media_teaser_small:
+    label: 'Horizontal media teaser - small'
+    layout: horizontal_media_teaser_small
+    config_template: '/src/assets/config_templates/CONTENT_TYPE_NAME/core.entity_view_display.node.CONTENT_TYPE_NAME.horizontal_media_teaser_small.yml'
+    config_name: 'core.entity_view_display.node.CONTENT_TYPE_NAME.horizontal_media_teaser_small'
+    
+  horizontal_media_teaser_xsmall:
+    label: 'Horizontal media teaser - xsmall'
+    layout: horizontal_media_teaser_xsmall
+    config_template: '/src/assets/config_templates/CONTENT_TYPE_NAME/core.entity_view_display.node.CONTENT_TYPE_NAME.horizontal_media_teaser_xsmall.yml'
+    config_name: 'core.entity_view_display.node.CONTENT_TYPE_NAME.horizontal_media_teaser_xsmall'
+    
+  text_teaser_large:
+    label: 'Text teaser - large'
+    layout: text_teaser_large
+    config_template: '/src/assets/config_templates/CONTENT_TYPE_NAME/core.entity_view_display.node.CONTENT_TYPE_NAME.text_teaser_large.yml'
+    config_name: 'core.entity_view_display.node.CONTENT_TYPE_NAME.text_teaser_large'
+
+  text_teaser_medium:
+    label: 'Text teaser - medium'
+    layout: text_teaser_medium
+    config_template: '/src/assets/config_templates/CONTENT_TYPE_NAME/core.entity_view_display.node.CONTENT_TYPE_NAME.text_teaser_medium.yml'
+    config_name: 'core.entity_view_display.node.CONTENT_TYPE_NAME.text_teaser_medium'
+
+  text_teaser_small:
+    label: 'Text teaser - small'
+    layout: text_teaser_small
+    config_template: '/src/assets/config_templates/CONTENT_TYPE_NAME/core.entity_view_display.node.CONTENT_TYPE_NAME.text_teaser_small.yml'
+    config_name: 'core.entity_view_display.node.CONTENT_TYPE_NAME.text_teaser_small'
+
+  tout_xlarge:
+    label: 'Tout - xlarge'
+    layout: tout_xlarge
+    config_template: '/src/assets/config_templates/CONTENT_TYPE_NAME/core.entity_view_display.node.CONTENT_TYPE_NAME.tout_xlarge.yml'
+    config_name: 'core.entity_view_display.node.CONTENT_TYPE_NAME.tout_xlarge'
+
+  tout_large:
+    label: 'Tout - large'
+    layout: tout_large
+    config_template: '/src/assets/config_templates/CONTENT_TYPE_NAME/core.entity_view_display.node.CONTENT_TYPE_NAME.tout_large.yml'
+    config_name: 'core.entity_view_display.node.CONTENT_TYPE_NAME.tout_large'
+
+  tout_medium:
+    label: 'Tout - medium'
+    layout: tout_medium
+    config_template: '/src/assets/config_templates/CONTENT_TYPE_NAME/core.entity_view_display.node.CONTENT_TYPE_NAME.tout_medium.yml'
+    config_name: 'core.entity_view_display.node.CONTENT_TYPE_NAME.tout_medium'
+
+  hero_xlarge:
+    label: 'Hero - xlarge'
+    layout: hero_xlarge
+    config_template: '/src/assets/config_templates/CONTENT_TYPE_NAME/core.entity_view_display.node.CONTENT_TYPE_NAME.hero_xlarge.yml'
+    config_name: 'core.entity_view_display.node.CONTENT_TYPE_NAME.hero_xlarge'

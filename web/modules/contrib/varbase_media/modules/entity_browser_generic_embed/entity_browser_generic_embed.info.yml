@@ -1,0 +1,12 @@
+name: Entity Browser Generic Embed
+description: 'Entity Browser Generic Embed'
+type: module
+package: Media
+core_version_requirement: ^8 || ^9
+dependencies:
+  - entity_browser:entity_browser
+
+# Information added by Drupal.org packaging script on 2020-12-01
+version: '8.x-7.31'
+project: 'varbase_media'
+datestamp: 1606831851

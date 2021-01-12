@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * @file
+ * Manage JavaScript snippets included in your website.
+ */
+
+use Drupal\script_manager\Entity\ScriptInterface;
+use Drupal\script_manager\ScriptPlacementManager;
+
+/**
+ * Implements hook_page_bottom().
+ */
+function script_manager_page_bottom(&$page) {
+  $page['script_manager'] = \Drupal::service('class_resolver')
+    ->getInstanceFromDefinition(ScriptPlacementManager::class)
+    ->getRenderedScriptsForPosition(ScriptInterface::POSITION_BOTTOM);
+}
+
+/**
+ * Implements hook_page_top().
+ */
+function script_manager_page_top(&$page) {
+  $page['script_manager'] = \Drupal::service('class_resolver')
+    ->getInstanceFromDefinition(ScriptPlacementManager::class)
+    ->getRenderedScriptsForPosition(ScriptInterface::POSITION_TOP);
+}

@@ -1,0 +1,24 @@
+.tout-view-mode {
+  margin-top: 15px;
+}
+
+.tout-view-mode .main-content {
+  position: relative;
+}
+
+.tout-view-mode .tout-content {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-self: flex-end;
+  padding: 1.2rem;
+}
+
+.tout-view-mode .tout-content > .field {
+  display: flex;
+  align-self: flex-end;
+}

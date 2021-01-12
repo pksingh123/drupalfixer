@@ -1,0 +1,12 @@
+@import "../../variables.scss";
+.vertical-media-teaser-view-mode {
+  margin: $view-modes-padding 0 0 0;
+  padding: 0;
+  
+  .main-content {
+    &:first-child {
+      margin-top: 0;
+      padding-top: 0;
+    }
+  }
+}

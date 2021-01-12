@@ -1,0 +1,14 @@
+{#
+/**
+ * @file
+ * View modes inventory - Tout - xlarge template.
+ */
+#}
+{% if title_suffix.contextual_links is not null %}
+  {{ title_suffix.contextual_links }}
+{% endif %}
+<{{ outer_wrapper }}{{ attributes.addClass('tout-view-mode', 'xlarge', 'clearfix') }}>
+  <{{ main_wrapper }} class="main-content">
+    {{ content.main }}
+  </{{ main_wrapper }}>
+</{{ outer_wrapper }}>

@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - crop
+    - varbase_media
+third_party_settings:
+  crop:
+    image_field: null
+id: gallery
+label: Gallery
+description: 'Use the gallery for a reusable set of images or videos.'
+source: gallery
+queue_thumbnail_downloads: false
+new_revision: true
+source_configuration:
+  source_field: field_media_gallery
+field_map: {  }

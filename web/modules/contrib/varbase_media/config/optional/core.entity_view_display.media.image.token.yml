@@ -1,0 +1,78 @@
+langcode: en
+status: false
+dependencies:
+  config:
+    - core.entity_view_mode.media.token
+    - field.field.media.image.field_media_image
+    - field.field.media.image.field_media_in_library
+    - media.type.image
+  module:
+    - ds
+    - image
+    - responsive_image
+    - user
+third_party_settings:
+  ds:
+    layout:
+      id: onecol
+      library: layout_discovery/onecol
+      disable_css: false
+      entity_classes: all_classes
+      settings: {  }
+    regions:
+      middle:
+        - field_media_image
+        - name
+        - uid
+        - created
+id: media.image.token
+targetEntityType: media
+bundle: image
+mode: token
+content:
+  created:
+    label: hidden
+    type: timestamp
+    weight: 3
+    settings:
+      date_format: medium
+      custom_date_format: ''
+      timezone: ''
+    third_party_settings: {  }
+    region: content
+  field_media_image:
+    weight: 0
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  name:
+    label: hidden
+    type: string
+    weight: 1
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    region: content
+  thumbnail:
+    type: responsive_image
+    weight: 0
+    label: above
+    settings:
+      responsive_image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    region: content
+  uid:
+    label: hidden
+    type: author
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_media_in_library: true
+  langcode: true

@@ -1,0 +1,44 @@
+
+Slick Views 8.x-2.0-dev, 2020-03-01
+-----------------------------------
+- Issue #3114885 by theterencechan: SlickViewsBase throws unexpected error when
+  thumbnail style is empty.
+
+Slick Views 8.x-2.0-dev, 2020-02-15
+-----------------------------------
+- Changed for safer sub-classing.
+
+Slick Views 8.x-2.0-dev, 2020-01-03
+-----------------------------------
+- Issue #3073842 by vuil: Update README.md (apply Drupal best practices).
+- Fixed for thumbnail URI.
+
+Slick Views 8.x-2.0-dev, 2019-04-19
+-----------------------------------
+- Fixed for schema with third party settings.
+- Fixed for regressions with aspect ratio, etc.
+
+Slick Views 8.x-2.0-dev, 2019-03-08
+-----------------------------------
+- Fixed for docs.
+
+Slick Views 8.x-2.0-dev, 2019-02-14
+-----------------------------------
+- #3028505 by itamair, gausarts: Add composer.json with require of drupal/slick.
+
+Slick Views 8.x-2.0-dev, 2019-01-17
+-----------------------------------
+- #3025949 by mahtab_alam: Unused variables should be removed.
+
+Slick Views 8.x-2.0-dev, 2019-01-03
+-----------------------------------
+- #2890632 by gausarts, WhereverPanda: Is grouping at all possible?
+
+Slick Views 8.x-2.0-dev, 2019-01-06
+-----------------------------------
+- Made Dots thumbnail effect option available for both View styles.
+
+Slick Views 8.x-2.0-dev, 2019-01-02
+-----------------------------------
+- Issue #3023416 by gausarts: Create a new branch for core Media.
+- Initial commit.

@@ -1,0 +1,8 @@
+@import "../../variables.scss";
+.tout-view-mode.xlarge {
+  .field--name-node-title {
+    h3 {
+      @include font-size($tout-xlarge-title-font-size);
+    }
+  }
+}

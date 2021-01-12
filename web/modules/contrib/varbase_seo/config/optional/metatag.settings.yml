@@ -1,0 +1,10 @@
+entity_type_groups:
+  node:
+    landing_page:
+      basic: basic
+    landing_page_lb:
+      basic: basic
+    page:
+      basic: basic
+    varbase_blog:
+      basic: basic

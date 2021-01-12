@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - media.type.gallery
+id: media.gallery
+target_entity_type_id: media
+target_bundle: gallery
+default_langcode: current_interface
+language_alterable: false

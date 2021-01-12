@@ -1,0 +1,236 @@
+body .media-library-item--grid {
+  max-width: 200px;
+
+  .views-field-views-bulk-operations-bulk-form {
+    position: absolute;
+    z-index: 3;
+  }
+}
+
+.media-library-view {
+  min-height: 300px;
+
+  &.view-display-id-widget {
+    .media-library-item__name a {
+      color: black;
+      text-decoration: none;
+    }
+  }
+
+  .form-actions {
+    margin: 0.75em 0;
+  }
+
+  .media-library-view--form-actions {
+    clear: left;
+    margin: 0.75em 0;
+    align-self: flex-end;
+  }
+
+  .media-library-views-form__header .form-item {
+    margin-right: 8px;
+  }
+
+  #drupal-modal .view-header {
+    margin: 16px 0;
+  }
+
+  .media-library-item:not(.media-library-item--grid) {
+    justify-content: center;
+    vertical-align: top;
+    border: 1px solid #dbdbdb;
+    margin: 16px 16px 2px 2px;
+    width: 180px;
+    background: #fff;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+
+    .field--name-thumbnail {
+      background-color: #ebebeb;
+      overflow: hidden;
+      text-align: center;
+
+      img {
+        height: 180px;
+        object-fit: contain;
+        object-position: center center;
+      }
+    }
+
+    &.is-hover,
+    &.checked,
+    &.is-focus {
+      border-color: #40b6ff;
+      border-width: 3px;
+      border-radius: 3px;
+      margin: 14px 14px 0 0;
+    }
+
+    &.checked {
+      border-color: #0076c0;
+    }
+
+    .js-click-to-select-checkbox {
+      input {
+        width: 30px;
+        height: 30px;
+      }
+
+    }
+
+    .views-field-operations {
+      height: 30px;
+
+      .dropbutton-wrapper {
+        display: inline-block;
+        position: absolute;
+        right: 5px;
+        bottom: 5px;
+      }
+    }
+
+    .media-library-item__preview {
+      padding-bottom: 34px;
+    }
+
+    .media-library-item__status {
+      color: #e4e4e4;
+      font-style: italic;
+      background: #666;
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+
+    .media-library-item__attributes {
+      position: absolute;
+      bottom: 0;
+      display: block;
+      padding: 5px;
+      max-width: calc(100% - 10px);
+      max-height: calc(100% - 50px);
+      overflow: hidden;
+      background: white;
+    }
+
+    .media-library-item__name {
+      font-size: 14px;
+
+      a {
+        display: block;
+        text-decoration: underline;
+        margin: 2px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .media-library-item__attributes:hover .media-library-item__name a,
+    .media-library-item__name a:focus,
+    .media-library-item.is-focus .media-library-item__name a,
+    .media-library-item.checked .media-library-item__name a {
+      white-space: normal;
+    }
+
+    .media-library-item__name a:focus {
+      border: 2px solid;
+      margin: 0;
+    }
+
+    .media-library-item__type {
+      font-size: 12px;
+      color: #696969;
+    }
+
+    .media-library-select-all {
+      margin: 10px 0 10px 0;
+      input {
+        margin-right: 10px;
+      }
+    }
+
+    .media-library-item--disabled {
+      opacity: 0.5;
+    }
+
+    .media-library-selection {
+      margin-bottom: 1.5rem;
+    }
+
+    .media-library-widget {
+      position: relative;
+
+      .media-library-widget {
+        .media-library-item__name a {
+          color: black;
+          text-decoration: none;
+        }
+      }
+    }
+
+    .media-library-widget__toggle-weight {
+      position: absolute;
+      right: 5px;
+      top: 5px;
+    }
+
+    /* Style the wrappers around new media and files */
+    .media-library-upload__media,
+    .media-library-upload__file {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 20px 0 20px 0;
+    }
+
+    .media-library-upload__file {
+      align-items: center;
+    }
+
+    .media-library-upload__file-label {
+      margin-right: 10px;
+    }
+
+    .media-library-upload__source-field {
+      .file,
+      .button,
+      .image-preview,
+      .form-type-managed-file > label,
+      .file-size {
+        display: none;
+      }
+    }
+
+    .media-library-upload__media-preview {
+      margin-right: 20px;
+      width: 180px;
+      background: #ebebeb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        display: block;
+      }
+    }
+
+  }
+
+
+
+  @media screen and (max-width: 600px) {
+    .media-library-item:not(.media-library-item--grid) {
+      width: 180px;
+
+      .field--name-thumbnail img {
+        width: 180px;
+      }
+
+      .views-field-operations {
+        .dropbutton-wrapper {
+          position: relative;
+          right: 0;
+          border: 0;
+        }
+      }
+    }
+  }
+}

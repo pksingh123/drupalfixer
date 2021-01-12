@@ -1,0 +1,32 @@
+yoast_seo_base_style:
+  version: 1.x
+  css:
+    theme:
+      css/yoast_seo.css: {}
+      css/yoast_seo_score.css: {}
+
+yoast_seo_core:
+  version: 1.x
+  js:
+    js/js-text-analysis/yoast-seo.min.js: {}
+    js/yoast_seo.js: {}
+  dependencies:
+      - core/jquery
+      - core/jquery.once
+      - core/drupal
+      - core/drupalSettings
+  css:
+    theme:
+      css/yoast_seo.css: {}
+
+yoast_seo_admin:
+  version: 1.x
+  css:
+    theme:
+      css/yoast_seo.message.css: {}
+
+yoast_seo_view:
+  version: 1.x
+  css:
+    theme:
+      css/yoast_seo.css: {}

@@ -1,0 +1,223 @@
+body .media-library-item--grid {
+  max-width: 200px;
+}
+
+body .media-library-item--grid .views-field-views-bulk-operations-bulk-form {
+  position: absolute;
+  z-index: 3;
+}
+
+.media-library-view {
+  min-height: 300px;
+}
+
+.media-library-view.view-display-id-widget .media-library-item__name a {
+  text-decoration: none;
+  color: black;
+}
+
+.media-library-view .form-actions {
+  margin: 0.75em 0;
+}
+
+.media-library-view .media-library-view--form-actions {
+  clear: left;
+  align-self: flex-end;
+  margin: 0.75em 0;
+}
+
+.media-library-view .media-library-views-form__header .form-item {
+  margin-right: 8px;
+}
+
+.media-library-view #drupal-modal .view-header {
+  margin: 16px 0;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) {
+  justify-content: center;
+  width: 180px;
+  margin: 16px 16px 2px 2px;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  vertical-align: top;
+  border: 1px solid #dbdbdb;
+  background: #fff;
+  /* Style the wrappers around new media and files */
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .field--name-thumbnail {
+  overflow: hidden;
+  text-align: center;
+  background-color: #ebebeb;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .field--name-thumbnail img {
+  height: 180px;
+  -o-object-fit: contain;
+  object-fit: contain;
+  -o-object-position: center center;
+  object-position: center center;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid).is-hover,
+.media-library-view .media-library-item:not(.media-library-item--grid).checked,
+.media-library-view .media-library-item:not(.media-library-item--grid).is-focus {
+  margin: 14px 14px 0 0;
+  border-width: 3px;
+  border-color: #40b6ff;
+  border-radius: 3px;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid).checked {
+  border-color: #0076c0;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .js-click-to-select-checkbox input {
+  width: 30px;
+  height: 30px;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .views-field-operations {
+  height: 30px;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .views-field-operations .dropbutton-wrapper {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  display: inline-block;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-item__preview {
+  padding-bottom: 34px;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-item__status {
+  padding: 5px 10px;
+  color: #e4e4e4;
+  background: #666;
+  font-size: 12px;
+  font-style: italic;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-item__attributes {
+  position: absolute;
+  bottom: 0;
+  display: block;
+  overflow: hidden;
+  max-width: calc(100% - 10px);
+  max-height: calc(100% - 50px);
+  padding: 5px;
+  background: white;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-item__name {
+  font-size: 14px;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-item__name a {
+  display: block;
+  overflow: hidden;
+  margin: 2px;
+  white-space: nowrap;
+  text-decoration: underline;
+  text-overflow: ellipsis;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-item__attributes:hover .media-library-item__name a,
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-item__name a:focus,
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-item.is-focus .media-library-item__name a,
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-item.checked .media-library-item__name a {
+  white-space: normal;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-item__name a:focus {
+  margin: 0;
+  border: 2px solid;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-item__type {
+  color: #696969;
+  font-size: 12px;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-select-all {
+  margin: 10px 0 10px 0;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-select-all input {
+  margin-right: 10px;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-item--disabled {
+  opacity: 0.5;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-selection {
+  margin-bottom: 1.5rem;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-widget {
+  position: relative;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-widget .media-library-widget .media-library-item__name a {
+  text-decoration: none;
+  color: black;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-widget__toggle-weight {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-upload__media,
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-upload__file {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px 0 20px 0;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-upload__file {
+  align-items: center;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-upload__file-label {
+  margin-right: 10px;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-upload__source-field .file,
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-upload__source-field .button,
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-upload__source-field .image-preview,
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-upload__source-field .form-type-managed-file > label,
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-upload__source-field .file-size {
+  display: none;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-upload__media-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 180px;
+  margin-right: 20px;
+  background: #ebebeb;
+}
+
+.media-library-view .media-library-item:not(.media-library-item--grid) .media-library-upload__media-preview img {
+  display: block;
+}
+
+@media screen and (max-width: 600px) {
+  .media-library-view .media-library-item:not(.media-library-item--grid) {
+    width: 180px;
+  }
+  .media-library-view .media-library-item:not(.media-library-item--grid) .field--name-thumbnail img {
+    width: 180px;
+  }
+  .media-library-view .media-library-item:not(.media-library-item--grid) .views-field-operations .dropbutton-wrapper {
+    position: relative;
+    right: 0;
+    border: 0;
+  }
+}

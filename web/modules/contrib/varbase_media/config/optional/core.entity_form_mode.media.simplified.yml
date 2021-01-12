@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.simplified
+label: Simplified
+targetEntityType: media
+cache: true

@@ -1,0 +1,9 @@
+.tout-view-mode.xlarge .field--name-node-title h3 {
+  font-size: calc(1.525rem + 3.3vw);
+}
+
+@media (min-width: 1200px) {
+  .tout-view-mode.xlarge .field--name-node-title h3 {
+    font-size: 4rem;
+  }
+}

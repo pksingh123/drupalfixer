@@ -1,0 +1,24 @@
+{
+  "name": "varbase_blog",
+  "description": "Provides Blog post content type and related configuration. Use Blog to publish blog post by different authors in the Blog section of the site.",
+  "license": "GPL-2.0",
+  "private": true,
+  "engines": {
+    "yarn": ">= 1.6",
+    "node": ">= 8.11"
+  },
+  "keywords": [
+    "Drupal",
+    "Varbase",
+    "Blog",
+    "Blog post",
+    "Blog section"
+  ],
+  "author": "Vardot",
+  "scripts": {
+    "phpcs": "phpcs --standard=./.phpcs.xml .",
+    "phpcbf": "phpcbf --standard=./.phpcs.xml ."
+  },
+  "dependencies": {  },
+  "devDependencies": {  }
+}

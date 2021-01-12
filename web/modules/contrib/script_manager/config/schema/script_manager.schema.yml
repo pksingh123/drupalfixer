@@ -1,0 +1,31 @@
+script_manager.settings:
+  type: config_entity
+  label: 'Views field view settings'
+  mapping:
+    enabled_visibility_plugins:
+      type: sequence
+      sequence:
+        type: string
+
+script_manager.script.*:
+  type: config_entity
+  label: 'Script'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    snippet:
+      type: string
+      label: 'Snippet'
+    position:
+      type: string
+      label: 'Position'
+    visibility:
+      type: sequence
+      label: 'Visibility Conditions'
+      sequence:
+        type: condition.plugin.[id]
+        label: 'Visibility Condition'

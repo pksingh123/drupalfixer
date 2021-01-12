@@ -1,0 +1,13 @@
+build:
+  assessment:
+    validate_codebase:
+      phplint:
+      csslint:
+      eslint:
+      phpcs:
+    testing:
+      run_tests.functional:
+        types: 'PHPUnit-Functional'
+        testgroups: 'vmi'
+        suppress-deprecations: true
+        halt-on-fail: false

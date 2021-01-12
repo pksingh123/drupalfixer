@@ -1,0 +1,20 @@
+media.source.gallery:
+  type: media.source.field_aware
+  label: '"Gallery" media source configuration'
+varbase_media.settings:
+  type: config_object
+  label: 'Varbase Media settings'
+  mapping:
+    use_blazy_blurry:
+      type: boolean
+      label: 'Use blurred image loading effect for Lazy-loaded images'
+field.formatter.settings.varbase_oembed:
+  type: mapping
+  label: 'Varbase oEmbed display format settings'
+  mapping:
+    max_width:
+      type: integer
+      label: 'Maximum width'
+    max_height:
+      type: integer
+      label: 'Maximum height'

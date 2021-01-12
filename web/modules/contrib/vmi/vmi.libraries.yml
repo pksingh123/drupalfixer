@@ -1,0 +1,192 @@
+# View Modes Inventory libraries.
+# Which they will peered with the list of View Modes Inventory
+
+# View modes inventory admin theme library.
+# ------------------------------------------------------------------------------
+vim_admin_theme:
+  version: 2.0
+  css:
+    theme:
+      css/vmi.admin.theme.css: {}
+
+# Vertical media teaser libraries.
+# ------------------------------------------------------------------------------
+
+# Vertical media teaser - xlarge.
+vertical_media_teaser_xlarge:
+  version: 2.0
+  css:
+    layout:
+      css/vertical-media-teaser/layout/vertical-media-teaser.css: {}
+    theme:
+      css/vertical-media-teaser/theme/vertical-media-teaser-xlarge.css: {}
+
+# Vertical media teaser - large.
+vertical_media_teaser_large:
+  version: 2.0
+  css:
+    layout:
+      css/vertical-media-teaser/layout/vertical-media-teaser.css: {}
+    theme:
+      css/vertical-media-teaser/theme/vertical-media-teaser-large.css: {}
+
+# Vertical media teaser - medium.
+vertical_media_teaser_medium:
+  version: 2.0
+  css:
+    layout:
+      css/vertical-media-teaser/layout/vertical-media-teaser.css: {}
+    theme:
+      css/vertical-media-teaser/theme/vertical-media-teaser.css: {}
+      css/vertical-media-teaser/theme/vertical-media-teaser-medium.css: {}
+
+# Vertical media teaser - small.
+vertical_media_teaser_small:
+  version: 2.0
+  css:
+    layout:
+      css/vertical-media-teaser/layout/vertical-media-teaser.css: {}
+    theme:
+      css/vertical-media-teaser/theme/vertical-media-teaser.css: {}
+      css/vertical-media-teaser/theme/vertical-media-teaser-small.css: {}
+      
+# Vertical media teaser - xsmall.
+vertical_media_teaser_xsmall:
+  version: 2.0
+  css:
+    layout:
+      css/vertical-media-teaser/layout/vertical-media-teaser.css: {}
+    theme:
+      css/vertical-media-teaser/theme/vertical-media-teaser.css: {}
+      css/vertical-media-teaser/theme/vertical-media-teaser-xsmall.css: {}
+
+
+# Horizontal media teaser libraries.
+# ------------------------------------------------------------------------------
+
+# Horizontal media teaser - xlarge.
+horizontal_media_teaser_xlarge:
+  version: 2.0
+  css:
+    layout:
+      css/horizontal-media-teaser/layout/horizontal-media-teaser.css: {}
+    theme:
+      css/horizontal-media-teaser/theme/horizontal-media-teaser-xlarge.css: {}
+
+# Horizontal media teaser - large.
+horizontal_media_teaser_large:
+  version: 2.0
+  css:
+    layout:
+      css/horizontal-media-teaser/layout/horizontal-media-teaser.css: {}
+    theme:
+      css/horizontal-media-teaser/theme/horizontal-media-teaser-large.css: {}
+      
+# Horizontal media teaser - medium. 
+horizontal_media_teaser_medium:
+  version: 2.0
+  css:
+    layout:
+      css/horizontal-media-teaser/layout/horizontal-media-teaser.css: {}
+    theme:
+      css/horizontal-media-teaser/theme/horizontal-media-teaser.css: {}
+      css/horizontal-media-teaser/theme/horizontal-media-teaser-medium.css: {}
+
+# Horizontal media teaser - small.
+horizontal_media_teaser_small:
+  version: 2.0
+  css:
+    layout:
+      css/horizontal-media-teaser/layout/horizontal-media-teaser.css: {}
+    theme:
+      css/horizontal-media-teaser/theme/horizontal-media-teaser.css: {}
+      css/horizontal-media-teaser/theme/horizontal-media-teaser-small.css: {}
+      
+# Horizontal media teaser - xsmall.
+horizontal_media_teaser_xsmall:
+  version: 2.0
+  css:
+    layout:
+      css/horizontal-media-teaser/layout/horizontal-media-teaser.css: {}
+    theme:
+      css/horizontal-media-teaser/theme/horizontal-media-teaser.css: {}
+      css/horizontal-media-teaser/theme/horizontal-media-teaser-xsmall.css: {}
+
+# Text teaser libraries.
+# ------------------------------------------------------------------------------
+
+# Text teaser - large.
+text_teaser_large:
+  version: 2.0
+  css:
+    layout:
+      css/text-teaser/layout/text-teaser.css: {}
+    theme:
+      css/text-teaser/theme/text-teaser-large.css: {}
+      
+# Text teaser - medium.
+text_teaser_medium:
+  version: 2.0
+  css:
+    layout:
+      css/text-teaser/layout/text-teaser.css: {}
+    theme:
+      css/text-teaser/theme/text-teaser-medium.css: {}
+
+# Text teaser - small.
+text_teaser_small:
+  version: 2.0
+  css:
+    layout:
+      css/text-teaser/layout/text-teaser.css: {}
+    theme:
+      css/text-teaser/theme/text-teaser.css: {}
+      css/text-teaser/theme/text-teaser-small.css: {}
+
+# Touts libraries. 
+# ------------------------------------------------------------------------------
+      
+# Tout - xlarge.
+tout_xlarge:
+  version: 2.0
+  css:
+    layout:
+      css/tout/layout/tout.css: {}
+      css/tout/layout/tout-xlarge.css: {}
+    theme:
+      css/tout/theme/tout.css: {}
+      css/tout/theme/tout-xlarge.css: {}
+      
+# Tout - large.
+tout_large:
+  version: 2.0
+  css:
+    layout:
+      css/tout/layout/tout.css: {}
+      css/tout/layout/tout-large.css: {}
+    theme:
+      css/tout/theme/tout.css: {}
+      css/tout/theme/tout-large.css: {}
+      
+# Tout - medium.
+tout_medium:
+  version: 2.0
+  css:
+    layout:
+      css/tout/layout/tout.css: {}
+      css/tout/layout/tout-medium.css: {}
+    theme:
+      css/tout/theme/tout.css: {}
+      css/tout/theme/tout-medium.css: {}
+      
+# Hero libraries. 
+# ------------------------------------------------------------------------------
+
+# Hero xlarge.    
+hero_xlarge:
+  version: 2.0
+  css:
+    layout:
+      css/hero/layout/hero-xlarge.css: {}
+    theme:
+      css/hero/theme/hero-xlarge.css: {}

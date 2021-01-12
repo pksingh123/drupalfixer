@@ -1,0 +1,25 @@
+@import "../../variables.scss";
+.hero-view-mode.xlarge {
+  .main-content {
+    position: relative;
+  }
+  
+  .hero-content {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: $xsmall-title-font-size;
+    z-index: 3;
+    
+    @media screen and (min-width: map-get($grid-breakpoints, "lg")) {
+      width: 50%;
+      top: 20%;
+      bottom: 20%;
+      left: 5%;
+      right: 5%;
+    }
+  }
+}

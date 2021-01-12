@@ -1,0 +1,87 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - media.type.image
+    - media.type.video
+    - views.view.media_browsers
+  module:
+    - dropzonejs_eb_widget
+    - entity_browser_generic_embed
+    - media
+    - views
+name: editor_multiple_media_browser
+label: 'Editor Multiple Media Browser'
+display: iframe
+display_configuration:
+  width: 100%
+  height: '850'
+  link_text: 'Select media'
+  auto_open: true
+selection_display: multi_step_display
+selection_display_configuration:
+  entity_type: media
+  display: rendered_entity
+  display_settings:
+    view_mode: field_preview
+  select_text: 'Use selected'
+  selection_hidden: false
+widget_selector: tabs
+widget_selector_configuration: {  }
+widgets:
+  901e1292-75e8-4ecf-a08a-904e75b135bb:
+    settings:
+      view: media_browsers
+      view_display: media_browser
+      submit_text: 'Select media'
+      auto_select: true
+    uuid: 901e1292-75e8-4ecf-a08a-904e75b135bb
+    weight: -10
+    label: Library
+    id: view
+  91fd896e-e8c5-415c-9d14-5bc59c60e630:
+    settings:
+      submit_text: 'Embed media'
+      form_mode: entity_browser
+    uuid: 91fd896e-e8c5-415c-9d14-5bc59c60e630
+    weight: -7
+    label: Embed
+    id: embed_code
+  f1b2dc13-325a-4469-8ed2-b32dbc5fce91:
+    settings:
+      media_type: video
+      upload_location: 'public://videos/[date:custom:Y]-[date:custom:m]'
+      dropzone_description: 'Drop video files here to upload them'
+      max_filesize: 128M
+      extensions: 'mp4 webm ogv'
+      clientside_resize: false
+      resize_width: null
+      resize_height: null
+      resize_quality: !!float 1
+      resize_method: contain
+      thumbnail_method: contain
+      submit_text: 'Select video(s)'
+      auto_select: true
+    uuid: f1b2dc13-325a-4469-8ed2-b32dbc5fce91
+    weight: -8
+    label: 'Upload video(s)'
+    id: dropzonejs_media_entity
+  3f1b8c4f-87d5-4869-b760-63dd69eb170c:
+    settings:
+      media_type: image
+      upload_location: 'public://images/[date:custom:Y]-[date:custom:m]'
+      dropzone_description: 'Drop image files here to upload them'
+      max_filesize: 32M
+      extensions: 'jpg jpeg gif png'
+      clientside_resize: false
+      resize_width: null
+      resize_height: null
+      resize_quality: !!float 1
+      resize_method: contain
+      thumbnail_method: contain
+      submit_text: 'Select image(s)'
+      auto_select: true
+    uuid: 3f1b8c4f-87d5-4869-b760-63dd69eb170c
+    weight: -9
+    label: 'Upload image(s)'
+    id: dropzonejs_media_entity

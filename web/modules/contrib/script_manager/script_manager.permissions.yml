@@ -1,0 +1,4 @@
+'administer scripts':
+  title: Administer Scripts
+  description: Control which scripts are rendered on the page.
+  restrict access: true

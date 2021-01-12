@@ -1,0 +1,19 @@
+
+Welcome to Pa11y
+
+ > Running Pa11y on URL http://localhost/wf/webform/example_accessibility_basic
+
+Results for URL: http://localhost/wf/webform/example_accessibility_basic
+
+ • Error: Duplicate id attribute value "edit-actions" found on the web page.
+   ├── WCAG2AA.Principle4.Guideline4_1.4_1_1.F77
+   ├── #edit-actions
+   └── <div data-drupal-selector="edit-actions" class="form-actions js-form-wrapper form-wrapper" id="edit-actions"><input class="search-form__subm...</div>
+
+ • Error: Duplicate id attribute value "edit-submit" found on the web page.
+   ├── WCAG2AA.Principle4.Guideline4_1.4_1_1.F77
+   ├── #edit-submit
+   └── <input class="search-form__submit button js-form-submit form-submit" data-drupal-selector="edit-submit" type="submit" id="edit-submit" value="Search">
+
+2 Errors
+

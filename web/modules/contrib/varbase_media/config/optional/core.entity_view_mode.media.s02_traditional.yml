@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.s02_traditional
+label: 'Size 02 traditional 4:3'
+targetEntityType: media
+cache: true

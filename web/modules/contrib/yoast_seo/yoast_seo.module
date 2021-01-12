@@ -1,0 +1,141 @@
+<?php
+
+/**
+ * @file
+ * Contains yoast_seo.module.
+ */
+
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter() for node_form().
+ */
+function yoast_seo_form_node_form_alter(&$form, &$form_state, $form_id) {
+  if (isset($form['#after_build']) && !empty($form['#after_build'])) {
+    $form['#after_build'][] = 'yoast_seo_form_node_afterbuild';
+  }
+  else {
+    $form['#after_build'] = ['yoast_seo_form_node_afterbuild'];
+  }
+}
+
+/**
+ * After build function.
+ *
+ * Reads the form, and deduct associated yoastseo configuration from it.
+ *
+ * @param array $form
+ *   The form array.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The form state array.
+ *
+ * @return mixed
+ *   The modified form.
+ */
+function yoast_seo_form_node_afterbuild($form, FormStateInterface $form_state) {
+  if (isset($form['field_yoast_seo'])) {
+    $yoast_seo_manager = \Drupal::service('yoast_seo.manager');
+    $yoast_seo_field_manager = \Drupal::service('yoast_seo.field_manager');
+    $form = $yoast_seo_manager->setGeneralConfiguration($form);
+    $form = $yoast_seo_field_manager->setFieldsConfiguration($form);
+    $form = $yoast_seo_manager->setTargetsConfiguration($form);
+    $form = $yoast_seo_manager->setScoreToStatusRulesConfiguration($form);
+    $form = $yoast_seo_field_manager->addSnippetEditorMarkup($form);
+    $form = $yoast_seo_field_manager->addOverallScoreMarkup($form, $form_state);
+  }
+
+  return $form;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function yoast_seo_form_field_storage_config_edit_form_alter(&$form, FormStateInterface $form_state) {
+  if ($form_state->getFormObject()->getEntity()->getType() == 'yoast_seo') {
+    // Hide the cardinality field.
+    $form['cardinality_container']['#access'] = FALSE;
+    $form['cardinality_container']['#disabled'] = TRUE;
+  }
+}
+
+/**
+ * Implements hook_field_access().
+ */
+function yoast_seo_entity_field_access($operation, $field_definition, $account, $items = NULL) {
+  if ($field_definition->getName() == 'field_yoast_seo') {
+    return AccessResult::forbiddenIf(
+      !($account->hasPermission('use yoast seo') || $account->hasPermission('administer yoast seo'))
+      || !($account->hasPermission('create url aliases') || $account->hasPermission('administer url aliases'))
+      // Such edit meta tags permission doesn't exist anymore, and administer
+      // meta tags is too restrictive.
+      // Wait or changes.
+      // || ! ( $account->hasPermission('edit meta tags') ||
+      // $account->hasPermission('administer meta tags') )
+    )->cachePerPermissions();
+  }
+
+  // No opinion.
+  return AccessResult::neutral();
+}
+
+/**
+ * Implements hook_theme().
+ */
+function yoast_seo_theme() {
+  $theme['yoast_snippet'] = [
+    'variables' => [
+      'wrapper_target_id' => NULL,
+      'snippet_target_id' => NULL,
+      'output_target_id' => NULL,
+    ],
+  ];
+
+  $theme['overall_score'] = [
+    'variables' => [
+      'overall_score_target_id' => NULL,
+      'overall_score' => NULL,
+    ],
+    'template' => 'overall_score',
+  ];
+
+  $theme['view_overall_score'] = [
+    'variables' => [
+      'overall_score' => NULL,
+    ],
+    'template' => 'view_overall_score',
+  ];
+
+  $theme['content_score'] = [
+    'variables' => [],
+    'template' => 'content_score',
+  ];
+
+  return $theme;
+}
+
+/**
+ * Alter the settings used for displaying an entity.
+ *
+ * @param \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display
+ *   The entity view display that will be used to display the entity
+ *   components.
+ * @param array $context
+ *   An associative array containing:
+ *   - entity_type: The entity type, e.g., 'node' or 'user'.
+ *   - bundle: The bundle, e.g., 'page' or 'article'.
+ *   - view_mode: The view mode, e.g., 'full', 'teaser', etc.
+ *
+ * @ingroup entity_crud
+ */
+function yoast_seo_entity_view_display_alter(EntityViewDisplayInterface $display, array $context) {
+  // Leave Yoast field labels out of the display.
+  if ($context['entity_type'] == 'node' && $context['view_mode'] == 'full') {
+    foreach ($display->getComponents() as $name => $options) {
+      if ($name == 'field_yoast_seo') {
+        $display->removeComponent($name);
+      }
+    }
+  }
+}

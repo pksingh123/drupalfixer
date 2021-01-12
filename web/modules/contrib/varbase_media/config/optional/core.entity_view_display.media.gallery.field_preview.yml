@@ -1,0 +1,97 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.field_preview
+    - field.field.media.gallery.field_media_gallery
+    - field.field.media.gallery.field_media_in_library
+    - image.style.d01_square
+    - media.type.gallery
+  module:
+    - ds
+    - media
+third_party_settings:
+  ds:
+    layout:
+      id: ds_1col
+      library: null
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        wrappers:
+          ds_content: div
+        outer_wrapper: div
+        attributes: ''
+        link_attribute: ''
+        link_custom: ''
+        classes:
+          layout_class: {  }
+    regions:
+      ds_content:
+        - field_media_gallery
+        - name
+id: media.gallery.field_preview
+targetEntityType: media
+bundle: gallery
+mode: field_preview
+content:
+  field_media_gallery:
+    type: media_thumbnail
+    weight: 0
+    region: ds_content
+    label: hidden
+    settings:
+      image_style: d01_square
+      image_link: ''
+    third_party_settings:
+      ds:
+        ds_limit: '4'
+        ft:
+          id: expert
+          settings:
+            lb: ''
+            prefix: ''
+            lbw-el: ''
+            lbw-cl: ''
+            lbw-at: ''
+            ow: true
+            ow-el: ''
+            ow-cl: 'media-field-preview gallery-thumbnail'
+            ow-at: ''
+            fis: true
+            fis-el: ''
+            fis-cl: field--name-thumbnail
+            fis-at: ''
+            fi-el: ''
+            fi-cl: ''
+            fi-at: ''
+            suffix: ''
+            lbw: false
+            lb-col: false
+            ow-def-at: false
+            ow-def-cl: false
+            fis-def-at: false
+            fi: false
+            fi-def-at: false
+  name:
+    type: string
+    weight: 1
+    region: ds_content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings:
+      ds:
+        ft:
+          id: default
+          settings:
+            lb: ''
+            lb-col: false
+            classes: {  }
+hidden:
+  created: true
+  field_media_in_library: true
+  langcode: true
+  search_api_excerpt: true
+  thumbnail: true
+  uid: true

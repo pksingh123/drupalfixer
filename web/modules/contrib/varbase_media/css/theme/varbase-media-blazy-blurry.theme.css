@@ -1,0 +1,100 @@
+.blazy.field--type-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.blazy.media-cover-image {
+  width: 100%;
+  height: auto;
+}
+
+.blazy.field--type-image .media--loading,
+.blazy.media-cover-image .media--loading {
+  -webkit-backface-visibility: inherit;
+  backface-visibility: inherit;
+  overflow: hidden;
+  max-width: 100%;
+  height: auto;
+}
+
+.blazy.field--type-image .media--loading::before,
+.blazy.media-cover-image .media--loading::before {
+  display: none;
+}
+
+.blazy.field--type-image .media--loading figure,
+.blazy.field--type-image .media--loading img,
+.blazy.media-cover-image .media--loading figure,
+.blazy.media-cover-image .media--loading img {
+  max-width: 100%;
+  height: auto;
+}
+
+.blazy.field--type-image .b-lazy,
+.blazy.media-cover-image .b-lazy {
+  transition: filter 0.2s, transform 0.2s;
+  transform: scale(1.001);
+  opacity: 1;
+  filter: blur(2px);
+}
+
+.blazy.field--type-image .b-loaded,
+.blazy.media-cover-image .b-loaded {
+  transform: scale(1);
+  filter: blur(0);
+}
+
+.blazy img {
+  width: 100%;
+  height: 100%;
+}
+
+.media--loading {
+  -webkit-backface-visibility: inherit;
+  backface-visibility: inherit;
+  overflow: hidden;
+}
+
+.media--loading::before {
+  display: none;
+}
+
+.text-formatted .blazy.blazy--field-media-image.field[data-blazy] {
+  display: inline-block;
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+}
+
+.text-formatted .align-center > .blazy.blazy--field-media-image.blazy--field-media-image--original {
+  width: auto;
+  max-width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.text-formatted .align-center > .blazy.blazy--field-media-image.blazy--field-media-image--large {
+  width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.text-formatted .align-center > .blazy.blazy--field-media-image.blazy--field-media-image--medium {
+  width: 50%;
+  margin-right: 25%;
+  margin-left: 25%;
+}
+
+.text-formatted .align-center > .blazy.blazy--field-media-image.blazy--field-media-image--small {
+  width: 25%;
+  margin-right: 37.5%;
+  margin-left: 37.5%;
+}
+
+.text-formatted .align-left > .blazy.blazy--field-media-image {
+  margin: 0 1rem 0 0;
+}
+
+.text-formatted .align-right > .blazy.blazy--field-media-image {
+  margin: 0 0 0 1rem;
+}

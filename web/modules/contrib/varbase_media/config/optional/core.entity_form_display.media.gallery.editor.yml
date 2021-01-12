@@ -1,0 +1,39 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_form_mode.media.editor
+    - entity_browser.browser.editor_multiple_media_browser
+    - field.field.media.gallery.field_media_gallery
+    - field.field.media.gallery.field_media_in_library
+    - media.type.gallery
+  module:
+    - entity_browser
+id: media.gallery.editor
+targetEntityType: media
+bundle: gallery
+mode: editor
+content:
+  field_media_gallery:
+    type: entity_browser_entity_reference
+    weight: 0
+    region: content
+    settings:
+      entity_browser: editor_multiple_media_browser
+      field_widget_display: rendered_entity
+      field_widget_display_settings:
+        view_mode: field_preview
+      field_widget_edit: true
+      field_widget_remove: true
+      field_widget_replace: true
+      open: true
+      selection_mode: selection_edit
+    third_party_settings: {  }
+hidden:
+  created: true
+  field_media_in_library: true
+  langcode: true
+  name: true
+  path: true
+  status: true
+  uid: true

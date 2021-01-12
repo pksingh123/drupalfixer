@@ -1,0 +1,32 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.varbase_blog
+  module:
+    - ctools
+    - views
+  theme:
+    - vartheme
+id: views_block__varbase_blog_most_popular_blog_posts_block
+theme: vartheme
+region: sidebar_second
+weight: -7
+provider: null
+plugin: 'views_block:varbase_blog-most_popular_blog_posts_block'
+settings:
+  id: 'views_block:varbase_blog-most_popular_blog_posts_block'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+  context_mapping: {  }
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      varbase_blog: varbase_blog
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

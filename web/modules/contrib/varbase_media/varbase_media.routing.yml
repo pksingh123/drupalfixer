@@ -1,0 +1,7 @@
+varbase_media.settings:
+  path: '/admin/config/varbase/varbase-media'
+  defaults:
+    _form: '\Drupal\varbase_media\Form\VarbaseMediaSettingsForm'
+    _title: 'Varbase Media settings'
+  requirements:
+    _permission: 'administer varbase media settings'

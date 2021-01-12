@@ -1,0 +1,5 @@
+services:
+  entity_browser_generic_embed.media_helper:
+    class: '\Drupal\entity_browser_generic_embed\MediaHelper'
+    arguments:
+      - '@entity_type.manager'

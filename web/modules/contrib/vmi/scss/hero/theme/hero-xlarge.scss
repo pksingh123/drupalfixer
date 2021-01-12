@@ -1,0 +1,27 @@
+@import "../../variables.scss";
+.hero-view-mode.xlarge {
+
+  .hero-content {
+    background: $hero-content-background-color1;
+    background: $hero-content-background-color2;
+    color: $hero-title-color;
+    
+    h3 {
+      margin: 0;
+      padding: 0;
+      color: $hero-title-color;
+      @include font-size($hero-xlarge-title-font-size);
+    }
+
+    a {
+      color: $hero-title-color;
+      text-decoration: none;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+      opacity: $hero-content-hover-opacity;
+    }
+  }
+}

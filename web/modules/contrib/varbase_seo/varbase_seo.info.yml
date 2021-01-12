@@ -1,0 +1,33 @@
+name: 'Varbase SEO'
+description: 'Provide Search Engine Optimization (SEO) Core features and settings.'
+type: module
+core_version_requirement: ^8 || ^9
+package: Varbase
+dependencies: []
+install:
+  - rdf
+  - metatag
+  - metatag_facebook
+  - metatag_google_plus
+  - metatag_hreflang
+  - metatag_mobile
+  - metatag_open_graph
+  - metatag_twitter_cards
+  - metatag_verification
+  - pathauto
+  - redirect
+  - redirect_404
+  - redirect_domain
+  - schema_metatag
+  - schema_article
+  - schema_item_list
+  - schema_web_page
+  - schema_web_site
+  - simple_sitemap
+  - yoast_seo
+  - script_manager
+
+# Information added by Drupal.org packaging script on 2020-12-01
+version: '8.x-6.18'
+project: 'varbase_seo'
+datestamp: 1606832375

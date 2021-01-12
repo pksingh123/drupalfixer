@@ -1,0 +1,164 @@
+<?php
+
+/**
+ * @file
+ * Length Indicator module hooks.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Field\WidgetInterface;
+
+/**
+ * Determines if a form widget is supported.
+ *
+ * @param string $widget
+ *   The widget to check.
+ *
+ * @return bool
+ *   TRUE if the widget is supported, FALSE if not.
+ */
+function _length_indicator_widget_is_supported($widget) {
+  return in_array($widget, [
+    'string_textfield',
+    'string_textarea',
+  ], TRUE);
+}
+
+/**
+ * Implements hook_theme().
+ */
+function length_indicator_theme($existing, $type, $theme, $path) {
+  return [
+    'length_indicator' => [
+      'variables' => [
+        'indicators' => [],
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_field_widget_third_party_settings_form().
+ */
+function length_indicator_field_widget_third_party_settings_form(WidgetInterface $plugin, FieldDefinitionInterface $field_definition, $form_mode, $form, FormStateInterface $form_state) {
+  $element = [];
+
+  if (_length_indicator_widget_is_supported($plugin->getPluginId())) {
+    $element['indicator'] = [
+      '#type' => 'checkbox',
+      '#title' => t('Length indicator'),
+      '#default_value' => $plugin->getThirdPartySetting('length_indicator', 'indicator'),
+    ];
+
+    $element['indicator_opt'] = [
+      '#type' => 'fieldset',
+      '#title' => t('Length indicator settings'),
+      '#states' => [
+        'visible' => [
+          ':input[name="fields[' . $field_definition->getName() . '][settings_edit_form][third_party_settings][length_indicator][indicator]"]' => [
+            'checked' => TRUE,
+          ],
+        ],
+      ],
+    ];
+
+    $indicator_opt = $plugin->getThirdPartySetting('length_indicator', 'indicator_opt');
+
+    $element['indicator_opt']['optimin'] = [
+      '#type' => 'number',
+      '#title' => t('Optimum minimum'),
+      '#default_value' => isset($indicator_opt['optimin']) ? $indicator_opt['optimin'] : 10,
+      '#required' => TRUE,
+      '#min' => 1,
+    ];
+
+    $element['indicator_opt']['optimax'] = [
+      '#type' => 'number',
+      '#title' => t('Optimum maximum'),
+      '#default_value' => isset($indicator_opt['optimax']) ? $indicator_opt['optimax'] : 15,
+      '#required' => TRUE,
+      '#min' => 5,
+      '#element_validate' => ['_length_indicator_settings_optimax'],
+    ];
+
+    $element['indicator_opt']['tolerance'] = [
+      '#type' => 'number',
+      '#title' => t('Tolerance'),
+      '#default_value' => isset($indicator_opt['tolerance']) ? $indicator_opt['tolerance'] : 5,
+      '#required' => TRUE,
+      '#min' => 0,
+      '#element_validate' => ['_length_indicator_settings_tolerance'],
+    ];
+
+  }
+  return $element;
+}
+
+/**
+ * Validate optimax value.
+ *
+ * @param array $element
+ *   Form element to be validated.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The state of the form.
+ */
+function _length_indicator_settings_optimax(array $element, FormStateInterface &$form_state) {
+  $parents = array_slice($element['#parents'], 0, -1);
+  $indicator_opt = $form_state->getValue($parents);
+
+  if ($indicator_opt['optimax'] <= $indicator_opt['optimin']) {
+    $form_state->setError($element, t('Optimum maximum has to be greater than the optimum minimum'));
+  }
+}
+
+/**
+ * Validate tolerance value.
+ *
+ * @param array $element
+ *   Form element to be validated.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The state of the form.
+ */
+function _length_indicator_settings_tolerance(array $element, FormStateInterface &$form_state) {
+  $parents = array_slice($element['#parents'], 0, -1);
+  $indicator_opt = $form_state->getValue($parents);
+
+  if ($indicator_opt['tolerance'] >= $indicator_opt['optimin']) {
+    $form_state->setError($element, t('Tolerance has to be smaller than the optimum minimum'));
+  }
+}
+
+/**
+ * Implements hook_field_widget_settings_summary_alter().
+ */
+function length_indicator_field_widget_settings_summary_alter(&$summary, $context) {
+  if (_length_indicator_widget_is_supported($context['widget']->getPluginId())) {
+    $indicator = $context['widget']->getThirdPartySetting('length_indicator', 'indicator');
+    $indicator_string = $indicator ? 'On' : 'Off';
+    $summary[] = 'Length indicator: ' . $indicator_string;
+  }
+}
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function length_indicator_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
+  if (_length_indicator_widget_is_supported($context['widget']->getPluginId())) {
+    if ($context['widget']->getThirdPartySetting('length_indicator', 'indicator')) {
+      $element['#attached']['library'][] = 'length_indicator/length_indicator';
+      $indicator_opt = $context['widget']->getThirdPartySetting('length_indicator', 'indicator_opt');
+      $element['value']['#attributes']['data-length-indicator-total'] = $indicator_opt['optimin'] + $indicator_opt['optimax'];
+      $element['value']['#attributes']['length-indicator-enabled'] = '';
+      $service_length_indicator = \Drupal::service('length_indicator.get_width_pos');
+      $element['length_indicator'] = [
+        '#theme' => 'length_indicator',
+        '#indicators' => $service_length_indicator->getWidthAndPosition(
+          $indicator_opt['optimin'],
+          $indicator_opt['optimax'],
+          $indicator_opt['tolerance']
+        ),
+      ];
+    }
+  }
+}

@@ -1,0 +1,67 @@
+/**
+ * @file
+ * Blur effect.
+ *
+ * While blurring animation impresses smoother transition, it is likely slow.
+ * You can override this file, and change animation to just transition instead.
+ */
+
+@-webkit-keyframes blazyBlur {
+  0% {
+    filter: blur(6px);
+    -webkit-transform: scale(1.04);
+    transform: scale(1.04);
+    opacity: 0;
+  }
+  100% {
+    filter: blur(0px);
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes blazyBlur {
+  0% {
+    filter: blur(6px);
+    transform: scale(1.04);
+    opacity: 0;
+  }
+  100% {
+    filter: blur(0px);
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/**
+Remove overflow as needed if CSS background is enabled, or on your own.
+Basically the parent container should have overflow: hidden; to avoid unwanted
+scaling. Adjust this to the closest ancestor if not already: .grid, .slide, etc.
+.blazy {
+  overflow: hidden;
+  position: relative;
+}
+*/
+
+/* Non-js element. Supports both BG, or inline media. */
+/* Prevents collapsing thumbnail image if Aspect ratio is disabled. */
+[data-animation="blur"] img {
+  width: 100%;
+}
+
+/* Remove not-so-useful loading indicator for BG only.
+.b-bg.media--loading[data-animation="blur"]::before {
+  display: none;
+} */
+
+/* Js dynamic classes during animation to match animate.css convention. */
+.b-bg.animated.blur,
+.animated.blur img {
+  /* opacity: 1; */
+  /* transition: opacity 500ms ease-in-out; */
+  transition: none;
+  /** will-change: transform, opacity; */
+  -webkit-animation: blazyBlur 2s;
+  animation: blazyBlur 2s;
+}

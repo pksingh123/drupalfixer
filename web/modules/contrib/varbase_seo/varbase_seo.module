@@ -1,0 +1,68 @@
+<?php
+
+/**
+ * @file
+ * Contains varbase_seo.module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\Yaml\Yaml;
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ *
+ * Alter node form.
+ */
+function varbase_seo_form_node_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if (isset($form['field_yoast_seo']) &&
+      isset($form['field_yoast_seo']['widget']) &&
+      isset($form['field_yoast_seo']['widget']['0']) &&
+      isset($form['field_yoast_seo']['widget']['0']['yoast_seo'])) {
+    $form['field_yoast_seo']['widget']['0']['yoast_seo']['#title'] = t('Real-time SEO analyzer');
+  }
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ *
+ * Alter Metatag defaults edit form.
+ */
+function varbase_seo_form_metatag_defaults_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  // Override Entity type / Group Mapping will be reflected on
+  // Metatags General form.
+  $metatag_defaults = $form_state->getformObject()->getEntity();
+  $metatag_manager = \Drupal::service('metatag.manager');
+  $values = $metatag_defaults->get('tags');
+  $form = $metatag_manager->form($values, $form);
+
+  // Move Active checkbox to the bottom of the form.
+  $status = $form['status'];
+  unset($form['status']);
+  $form['status'] = $status;
+}
+
+/**
+ * Implements hook_modules_installed().
+ */
+function varbase_seo_modules_installed($modules) {
+  // When we enable the Google Analytics module we load the custom GA settings.
+  if (in_array('google_analytics', $modules)) {
+
+    $google_analytics_managed_optional_path = Drupal::service('module_handler')->getModule('varbase_seo')->getPath() . '/config/managed/google_analytics';
+
+    // Varbase SEO custom google analytics config settings.
+    $google_analytics_managed_optional_configs = [
+      'google_analytics.settings',
+    ];
+
+    foreach ($google_analytics_managed_optional_configs as $config_name) {
+      $config_path = $google_analytics_managed_optional_path . '/' . $config_name . '.yml';
+      $config_content = file_get_contents($config_path);
+      $config_data = (array) Yaml::parse($config_content);
+      $config_factory = \Drupal::configFactory()->getEditable($config_name);
+      $config_factory->setData($config_data)->save(TRUE);
+    }
+  }
+
+}

@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - image.style.d08_square
+    - image.style.d09_square
+  module:
+    - varbase_media
+id: d09_square
+label: 'Display 09 responsive square 1:1'
+image_style_mappings:
+  -
+    breakpoint_id: varbase_media.screen-sm-max
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: d08_square
+  -
+    breakpoint_id: varbase_media.screen-md-min
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: d09_square
+breakpoint_group: varbase_media
+fallback_image_style: d08_square

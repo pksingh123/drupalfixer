@@ -1,0 +1,9 @@
+.text-teaser-view-mode {
+  margin: 15px 0 0 0;
+  padding: 0;
+}
+
+.text-teaser-view-mode .main-content:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}

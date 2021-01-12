@@ -1,0 +1,36 @@
+{
+  "name": "drupal/vmi",
+  "description": "View Modes Inventory : This module has a set of template view modes that we typically use (some of them) in each website.",
+  "type": "drupal-module",
+  "homepage": "https://www.drupal.org/project/vmi",
+  "license": "GPL-2.0-or-later",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "Vardot",
+      "homepage": "https://www.drupal.org/vardot",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/vmi",
+    "source": "http://cgit.drupalcode.org/vmi"
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    }
+  ],
+  "require": {
+    "drupal/core": "^8.8.0 || ~9.0.0",
+    "drupal/ds": "~3",
+    "drupal/field_group": "~3",
+    "drupal/smart_trim": "~1"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-8.x-2.x": "8.2.x-dev"
+    }
+  }
+}

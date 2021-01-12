@@ -1,0 +1,183 @@
+// Varbase media common library style.
+// =============================================================================
+
+// Alignment classes for embedded entities.
+
+// Image align center style.
+.embedded-entity {
+  &.align-center {
+    img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    figcaption {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+  }
+  
+  &.align-right {
+    margin: 0 0 1rem 1rem;
+    
+    figcaption {
+      text-align: center;
+    }
+  }
+  
+  &.align-left {
+    margin: 0 8px 8px 0;
+    
+    figcaption {
+      text-align: center;
+    }
+  }
+}
+
+picture {
+  &.align-right {
+    margin: 0 0 1rem 1rem;
+    
+    figcaption {
+      text-align: center;
+    }
+  }
+
+  &.align-left {
+    margin: 0 1rem 1rem 0;
+    
+    figcaption {
+      text-align: center;
+    }
+  }
+}
+
+figure {
+  &.align-center {
+    img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    figcaption {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+  }
+  
+  &.align-right {
+    display:table;
+    margin: 0 0 1rem 1rem;
+    
+    figcaption {
+      display: table-caption;
+      caption-side: bottom;
+    }
+  }
+
+  &.align-left {
+    display:table;
+    margin: 0 1rem 1rem 0;
+    
+    figcaption {
+      display: table-caption;
+      caption-side: bottom;
+    }
+  }
+}
+
+img {
+  &.align-center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &.align-right {
+    margin: 0 0 1rem 1rem;
+  }
+}
+
+// Image caption Right and Left style (Fit Image).
+figure {
+  
+  &.align-right,
+  &.align-left {
+    display:table;
+
+    figcaption {
+      display: table-caption;
+      caption-side: bottom;
+      text-align: center;
+    }
+  }
+
+  &.caption.caption-drupal-media {
+
+    &.align-center {
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }
+}
+
+.media {
+  &.media--type-remote-video,
+  &.media--type-video {
+    width: 100%;
+    
+    &.align-center {
+
+      figcaption {
+        display: table-caption;
+        caption-side: bottom;
+        text-align: center;
+      }
+    }
+
+    &.align-right {
+      display:table;
+      margin: 0 0 1rem 1rem;
+
+      figcaption {
+        display: table-caption;
+        caption-side: bottom;
+        text-align: center;
+      }
+    }
+
+    &.align-left {
+      display:table;
+      margin: 0 1rem 1rem 0;
+
+      figcaption {
+        display: table-caption;
+        caption-side: bottom;
+        text-align: center;
+      }
+    }
+    
+    &.media--view-mode-medium {
+      width: 50%; 
+    }
+
+    &.media--view-mode-small {
+      width: 25%; 
+    }
+
+  }
+
+  &.media--type-remote-video
+  &.media--bundle--image {
+    .blazy img {
+      width: auto;
+      height: auto;
+    }
+  }
+}

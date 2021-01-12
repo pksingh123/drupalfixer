@@ -1,0 +1,9 @@
+{
+  "name": "drupal/length_indicator",
+  "description": "Adds an optional length indicator to fields",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "drupal/core": "^8.7.7 || ^9"
+  }
+}

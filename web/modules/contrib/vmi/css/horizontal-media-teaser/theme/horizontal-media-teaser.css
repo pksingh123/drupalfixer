@@ -1,0 +1,44 @@
+.horizontal-media-teaser-view-mode.anchor-all {
+  position: relative;
+}
+
+.horizontal-media-teaser-view-mode.anchor-all .right,
+.horizontal-media-teaser-view-mode.anchor-all .left {
+  position: static;
+}
+
+.horizontal-media-teaser-view-mode.anchor-all .field--name-node-title {
+  position: static;
+}
+
+.horizontal-media-teaser-view-mode.anchor-all .field--name-node-title h3 {
+  position: static;
+  font-size: calc(1.265rem + 0.18vw);
+}
+
+@media (min-width: 1200px) {
+  .horizontal-media-teaser-view-mode.anchor-all .field--name-node-title h3 {
+    font-size: 1.4rem;
+  }
+}
+
+.horizontal-media-teaser-view-mode.anchor-all .field--name-node-title h3 a {
+  position: static;
+}
+
+.horizontal-media-teaser-view-mode.anchor-all .field--name-node-title h3 a::before {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  overflow: hidden;
+  content: "";
+}
+
+.horizontal-media-teaser-view-mode.anchor-all a {
+  position: relative;
+  z-index: 2;
+}

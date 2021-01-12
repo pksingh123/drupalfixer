@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Install view modes inventory module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function vmi_install() {
+  module_set_weight('vmi', 3);
+}

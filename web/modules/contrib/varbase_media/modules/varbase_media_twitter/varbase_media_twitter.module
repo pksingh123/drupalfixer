@@ -1,0 +1,71 @@
+<?php
+
+/**
+ * @file
+ * Support for tweets as media entities.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\entity_browser_generic_embed\OverrideHelper;
+use Drupal\varbase_media_twitter\Plugin\media\Source\VarbaseMediaTwitter;
+
+/**
+ * Implements hook_media_source_info_alter().
+ */
+function varbase_media_twitter_media_source_info_alter(array &$sources) {
+  $sources['twitter']['input_match'] = [
+    'constraint' => 'TweetEmbedCode',
+    'field_types' => [
+      'string',
+      'string_long',
+    ],
+  ];
+  $sources['twitter']['preview'] = TRUE;
+
+  OverrideHelper::pluginClass($sources['twitter'], VarbaseMediaTwitter::class);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function varbase_media_twitter_form_entity_embed_dialog_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Only at the embed step.
+  if ($form_state->get('step') == 'embed') {
+
+    // Get the entity values and attributes.
+    $entity_element = [];
+    $entity_element += $form_state->get('entity_element');
+    $form_state->set('entity_element', $entity_element);
+    $entity = $form_state->get('entity');
+
+    // Get the entity bundle type.
+    $bundle_type = $entity->bundle();
+
+    if ($bundle_type == "tweet") {
+      $builder = \Drupal::entityTypeManager()->getViewBuilder($entity->getEntityTypeId());
+
+      // Render the Embed entity.
+      $form['entity'] = [
+        '#type' => 'item',
+        '#markup' => \Drupal::service('renderer')->renderRoot($builder->view($entity, 's06')),
+      ];
+
+      if (isset($form['attributes']['data-align'])) {
+        unset($form['attributes']['data-align']);
+      }
+
+      if (isset($form['attributes']['data-entity-embed-display-settings'])) {
+        unset($form['attributes']['data-entity-embed-display-settings']);
+      }
+
+      if (isset($form['attributes']['data-caption'])) {
+        unset($form['attributes']['data-caption']);
+      }
+
+      if (isset($form['attributes']['data-entity-embed-display'])) {
+        $form['attributes']['data-entity-embed-display']['#access'] = FALSE;
+        $form['attributes']['data-entity-embed-display']['#default_value'] = 'view_mode:media.original';
+      }
+    }
+  }
+}

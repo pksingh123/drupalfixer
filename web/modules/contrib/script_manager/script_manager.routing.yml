@@ -1,0 +1,31 @@
+entity.script.collection:
+  path: '/admin/structure/scripts'
+  defaults:
+    _entity_list: 'script'
+    _title: 'Scripts'
+  requirements:
+    _permission: 'administer scripts'
+
+entity.script.add_form:
+  path: '/admin/structure/scripts/add'
+  defaults:
+    _entity_form: 'script.default'
+    _title: 'Add script'
+  requirements:
+    _entity_create_access: 'script'
+
+entity.script.edit_form:
+  path: '/admin/structure/scripts/manage/{script}'
+  defaults:
+    _entity_form: 'script.default'
+    _title_callback: '\Drupal\script_manager\Form\ScriptForm::formTitle'
+  requirements:
+    _entity_access: 'script.update'
+
+entity.script.delete_form:
+  path: '/admin/structure/scripts/manage/{script}/delete'
+  defaults:
+    _entity_form: 'script.delete'
+    _title: 'Delete script'
+  requirements:
+    _entity_access: 'script.delete'

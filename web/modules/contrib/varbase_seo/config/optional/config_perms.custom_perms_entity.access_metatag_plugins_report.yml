@@ -1,0 +1,6 @@
+langcode: en
+status: true
+dependencies: {  }
+id: access_metatag_plugins_report
+label: 'Access metatag plugins report'
+route: metatag.reports_plugins

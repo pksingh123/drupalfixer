@@ -1,0 +1,24 @@
+.hero-view-mode.xlarge .main-content {
+  position: relative;
+}
+
+.hero-view-mode.xlarge .hero-content {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1.2rem;
+}
+
+@media screen and (min-width: 992px) {
+  .hero-view-mode.xlarge .hero-content {
+    top: 20%;
+    right: 5%;
+    bottom: 20%;
+    left: 5%;
+    width: 50%;
+  }
+}

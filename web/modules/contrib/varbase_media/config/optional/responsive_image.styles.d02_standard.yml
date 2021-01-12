@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - image.style.d02_standard
+    - image.style.d04_standard
+  module:
+    - varbase_media
+id: d02_standard
+label: 'Display 02 responsive standard 16:9'
+image_style_mappings:
+  -
+    breakpoint_id: varbase_media.screen-sm-max
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: d04_standard
+  -
+    breakpoint_id: varbase_media.screen-md-min
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: d02_standard
+breakpoint_group: varbase_media
+fallback_image_style: d02_standard

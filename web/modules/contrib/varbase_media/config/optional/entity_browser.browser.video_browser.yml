@@ -1,0 +1,61 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - media.type.video
+    - views.view.media_browsers
+  module:
+    - dropzonejs_eb_widget
+    - entity_browser_generic_embed
+    - media
+    - views
+name: video_browser
+label: 'Video Browser'
+display: modal
+display_configuration:
+  width: '1245'
+  height: ''
+  link_text: 'Select video(s)'
+  auto_open: false
+selection_display: no_display
+selection_display_configuration: {  }
+widget_selector: tabs
+widget_selector_configuration: {  }
+widgets:
+  253f86d3-665e-4e0e-b180-7be4266cc618:
+    settings:
+      view: media_browsers
+      view_display: media_browser
+      submit_text: 'Select video(s)'
+      auto_select: false
+    uuid: 253f86d3-665e-4e0e-b180-7be4266cc618
+    weight: -10
+    label: Library
+    id: view
+  ed821f5d-dd9e-4132-b89a-54d97a36cd4e:
+    settings:
+      submit_text: 'Embed media'
+      form_mode: entity_browser
+    uuid: ed821f5d-dd9e-4132-b89a-54d97a36cd4e
+    weight: 4
+    label: Embed
+    id: embed_code
+  ad7800f0-c930-4f86-905d-7dd893b2945f:
+    settings:
+      form_mode: entity_browser
+      media_type: video
+      upload_location: 'public://videos/[date:custom:Y]-[date:custom:m]'
+      dropzone_description: 'Drop video file here to upload it'
+      max_filesize: 128M
+      extensions: 'mp4 webm ogv'
+      clientside_resize: false
+      resize_width: null
+      resize_height: null
+      resize_quality: !!float 1
+      resize_method: contain
+      thumbnail_method: contain
+      submit_text: 'Select video(s)'
+    uuid: ad7800f0-c930-4f86-905d-7dd893b2945f
+    weight: 4
+    label: Upload
+    id: dropzonejs_media_entity_inline_entity_form

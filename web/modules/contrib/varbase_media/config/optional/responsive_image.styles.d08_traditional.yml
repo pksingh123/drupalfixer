@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - image.style.d08_traditional
+  module:
+    - varbase_media
+id: d08_traditional
+label: 'Display 08 responsive traditional 4:3'
+image_style_mappings:
+  -
+    breakpoint_id: varbase_media.screen-md-min
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: d08_traditional
+  -
+    breakpoint_id: varbase_media.screen-sm-max
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: d08_traditional
+breakpoint_group: varbase_media
+fallback_image_style: d08_traditional

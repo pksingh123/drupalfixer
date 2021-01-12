@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * @file
+ * Provides Slick carousel integration with Views.
+ */
+
+/**
+ * Implements hook_help().
+ */
+function slick_views_help($route_name) {
+  if ($route_name == 'help.page.slick_views') {
+    $output = file_get_contents(dirname(__FILE__) . '/README.md');
+    // @todo remove check once Blazy has stable release.
+    return function_exists('blazy_parse_markdown') ? blazy_parse_markdown($output) : '<pre>' . $output . '</pre>';
+  }
+  return '';
+}

@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.field_preview
+label: 'Field Preview'
+targetEntityType: media
+cache: true

@@ -1,0 +1,298 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.vertical_media_teaser_medium
+    - field.field.node.varbase_blog.body
+    - field.field.node.varbase_blog.field_blog_categories
+    - field.field.node.varbase_blog.field_media
+    - field.field.node.varbase_blog.field_meta_tags
+    - field.field.node.varbase_blog.field_tags
+    - field.field.node.varbase_blog.field_yoast_seo
+    - node.type.varbase_blog
+  module:
+    - ds
+    - field_group
+    - smart_trim
+    - user
+third_party_settings:
+  ds:
+    layout:
+      id: vertical_media_teaser_medium
+      library: vmi/vertical_media_teaser_medium
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        wrappers:
+          main: div
+        outer_wrapper: article
+        attributes: ''
+        link_attribute: ''
+        link_custom: ''
+        classes:
+          layout_class: {  }
+    regions:
+      main:
+        - group_card
+        - field_media
+        - group_description
+        - group_author_info
+        - node_title
+        - body
+        - node_author
+        - node_link
+        - node_post_date
+    fields:
+      node_link:
+        plugin_id: node_link
+        weight: 11
+        label: hidden
+        formatter: default
+        settings:
+          'link text': 'Read more'
+          'link class': card-link
+          wrapper: div
+          class: 'read-more pull-right'
+        ft:
+          id: minimal
+          settings:
+            lb: ''
+            lb-col: false
+            classes: {  }
+      node_author:
+        plugin_id: node_author
+        weight: 10
+        label: hidden
+        formatter: author
+        ft:
+          id: expert
+          settings:
+            lb: ''
+            prefix: ''
+            lbw-el: ''
+            lbw-cl: ''
+            lbw-at: ''
+            ow-el: ''
+            ow-cl: ''
+            ow-at: ''
+            fis-el: ''
+            fis-cl: ''
+            fis-at: ''
+            fi: true
+            fi-el: span
+            fi-cl: author-name
+            fi-at: ''
+            suffix: ''
+            lbw: false
+            lb-col: false
+            ow: false
+            ow-def-at: false
+            ow-def-cl: false
+            fis: false
+            fis-def-at: false
+            fi-def-at: false
+      node_title:
+        plugin_id: node_title
+        weight: 9
+        label: hidden
+        formatter: default
+        settings:
+          link: true
+          wrapper: h3
+          class: card-title
+        ft:
+          id: default
+          settings:
+            lb: ''
+            lb-col: false
+            classes: {  }
+      node_post_date:
+        plugin_id: node_post_date
+        weight: 11
+        label: hidden
+        formatter: ds_post_date_short
+        ft:
+          id: expert
+          settings:
+            lb: ''
+            prefix: ''
+            lbw-el: ''
+            lbw-cl: ''
+            lbw-at: ''
+            ow-el: ''
+            ow-cl: ''
+            ow-at: ''
+            fis-el: ''
+            fis-cl: ''
+            fis-at: ''
+            fi: true
+            fi-el: span
+            fi-cl: post-date
+            fi-at: ''
+            suffix: ''
+            lbw: false
+            lb-col: false
+            ow: false
+            ow-def-at: false
+            ow-def-cl: false
+            fis: false
+            fis-def-at: false
+            fi-def-at: false
+  field_group:
+    group_description:
+      children:
+        - group_author_info
+        - node_title
+        - body
+        - node_link
+      parent_name: group_card
+      weight: 3
+      format_type: html_element
+      format_settings:
+        label: Description
+        element: div
+        show_label: false
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: card-body
+      label: Description
+      region: hidden
+    group_author_info:
+      children:
+        - node_author
+        - node_post_date
+      parent_name: group_description
+      weight: 8
+      format_type: html_element
+      format_settings:
+        label: 'Author info'
+        element: div
+        show_label: false
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: 'author-info small'
+      label: 'Author info'
+      region: hidden
+    group_card:
+      children:
+        - field_media
+        - group_description
+      parent_name: ''
+      weight: 0
+      format_type: html_element
+      format_settings:
+        label: Card
+        element: div
+        show_label: false
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: card
+      label: Card
+      region: hidden
+id: node.varbase_blog.vertical_media_teaser_medium
+targetEntityType: node
+bundle: varbase_blog
+mode: vertical_media_teaser_medium
+content:
+  body:
+    label: hidden
+    type: smart_trim
+    weight: 10
+    settings:
+      trim_length: 30
+      trim_type: words
+      trim_suffix: ' ...'
+      wrap_class: trimmed
+      more_text: 'Read More'
+      more_class: card-link
+      summary_handler: full
+      wrap_output: false
+      more_link: false
+      trim_options:
+        text: false
+        trim_zero: false
+    third_party_settings:
+      ds:
+        ft:
+          id: expert
+          settings:
+            lb: ''
+            prefix: ''
+            lbw-el: ''
+            lbw-cl: ''
+            lbw-at: ''
+            ow: true
+            ow-el: ''
+            ow-cl: ''
+            ow-at: ''
+            ow-def-at: true
+            ow-def-cl: true
+            fis: true
+            fis-el: ''
+            fis-cl: ''
+            fis-at: ''
+            fis-def-at: true
+            fi: true
+            fi-el: ''
+            fi-cl: card-text
+            fi-at: ''
+            fi-def-at: true
+            suffix: ''
+            lbw: false
+            lb-col: false
+    region: main
+  field_media:
+    type: entity_reference_entity_view
+    weight: 2
+    region: main
+    label: hidden
+    settings:
+      view_mode: s04_standard
+      link: false
+    third_party_settings:
+      ds:
+        ft:
+          id: expert
+          settings:
+            lb: ''
+            prefix: ''
+            lbw-el: ''
+            lbw-cl: ''
+            lbw-at: ''
+            ow: true
+            ow-el: ''
+            ow-cl: card-top-image
+            ow-at: ''
+            ow-def-at: true
+            ow-def-cl: true
+            fis-el: ''
+            fis-cl: ''
+            fis-at: ''
+            fi-el: ''
+            fi-cl: ''
+            fi-at: ''
+            suffix: ''
+            lbw: false
+            lb-col: false
+            fis: false
+            fis-def-at: false
+            fi: false
+            fi-def-at: false
+hidden:
+  field_blog_categories: true
+  field_meta_tags: true
+  field_tags: true
+  field_yoast_seo: true
+  langcode: true
+  links: true
+  search_api_excerpt: true
+  content_moderation_control: true

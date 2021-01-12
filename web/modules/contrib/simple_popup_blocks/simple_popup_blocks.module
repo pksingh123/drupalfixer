@@ -1,0 +1,59 @@
+<?php
+
+/**
+ * @file
+ * Contains simple_popup_blocks.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\simple_popup_blocks\SimplePopupBlocksStorage;
+
+/**
+ * Implements hook_help().
+ */
+function simple_popup_blocks_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.simple_popup_blocks':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The Simple Popup Blocks module will turn any blocks, views, forms or anything into popup with the css selectors.') . '</p>';
+      $output .= '<h3>' . t('Configuration') . '</h3>';
+      $output .= '<p>' . t('To add popup, Go to Administration » Configuration » Media » Add simple popup blocks.') . '</p>';
+      $output .= '<p>' . t('To manage popup, Go to Administration » Configuration » Media » Add simple popup blocks » Manage.') . '</p>';
+      $output .= '<p>' . t('Once you created the popup, you will get some extra options like enable and adjusment classes. Use the suggested class to customize the popup designs with your own css.') . '</p>';
+      $output .= '<h3>' . t('Popup Designs') . '</h3>';
+      $output .= '<p>' . t("This module will not add any default popup designs. You have to customize it based on your requirement, It will provide CSS selectors on popup's edit page, with that you can extend the designs.") . '</p>';
+      $output .= '<h3>' . t('Note') . '</h3>';
+      $output .= '<p>' . t('1. Clear the caches whenever you create or update the popup settings.') . '</p>';
+      $output .= '<p>' . t('2. Placing your block at the bottom of you site is preferable') . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function simple_popup_blocks_page_attachments(array &$attachments) {
+  // Add libraries if it is not admin paths.
+  $route = \Drupal::routeMatch()->getRouteObject();
+  $is_admin = \Drupal::service('router.admin_context')->isAdminRoute($route);
+  $database = \Drupal::getContainer()->get('database');
+  if (!$is_admin) {
+    $popup_settings = [];
+    foreach (SimplePopupBlocksStorage::loadAll($database) as $entry) {
+      if ($entry->status == 1) {
+        if ($entry->type == 0) {
+          $identifier = preg_replace('/[_]+/', '-', $entry->identifier);
+          $entry->identifier = 'block-' . $identifier;
+        }
+        $visit_counts = unserialize($entry->visit_counts);
+        $entry->visit_counts = implode(",", $visit_counts);
+        // Sanitize each entry.
+        $popup_settings[] = array_map('Drupal\Component\Utility\Html::escape', (array) $entry);
+      }
+      $attachments['#attached']['library'][] = 'simple_popup_blocks/simple_popup_blocks';
+      $attachments['#attached']['drupalSettings']['simple_popup_blocks']['settings'] = $popup_settings;
+    }
+  }
+
+}

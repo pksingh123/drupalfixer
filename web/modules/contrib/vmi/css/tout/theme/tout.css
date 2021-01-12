@@ -1,0 +1,45 @@
+.tout-view-mode .field--name-node-title {
+  position: static;
+  color: #fff;
+}
+
+.tout-view-mode .field--name-node-title h3 {
+  position: static;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+}
+
+.tout-view-mode .field--name-node-title h3 a {
+  position: static;
+  text-decoration: none;
+  color: #fff;
+}
+
+.tout-view-mode .field--name-node-title h3 a::before {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  overflow: hidden;
+  content: "";
+}
+
+.tout-view-mode a {
+  position: relative;
+  z-index: 3;
+}
+
+.tout-view-mode .tout-content {
+  background: linear-gradient(to bottom, transparent 65%, #000 105%) repeat scroll 0 0;
+  background: -moz-linear-gradient(to bottom, transparent 65%, #000 105%) repeat scroll 0 0;
+}
+
+.tout-view-mode .tout-content:hover,
+.tout-view-mode .tout-content:focus,
+.tout-view-mode .tout-content:active {
+  opacity: 0.9;
+}

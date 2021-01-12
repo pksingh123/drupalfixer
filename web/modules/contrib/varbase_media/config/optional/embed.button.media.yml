@@ -1,0 +1,41 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.large
+    - core.entity_view_mode.media.medium
+    - core.entity_view_mode.media.original
+    - core.entity_view_mode.media.small
+    - entity_browser.browser.editor_media_browser
+    - media.type.audio
+    - media.type.file
+    - media.type.image
+    - media.type.remote_video
+    - media.type.video
+  module:
+    - entity_embed
+    - media
+label: 'Media Library'
+id: media
+type_id: entity
+type_settings:
+  entity_type: media
+  bundles:
+    - audio
+    - file
+    - image
+    - remote_video
+    - video
+  display_plugins:
+    - 'view_mode:media.large'
+    - 'view_mode:media.medium'
+    - 'view_mode:media.original'
+    - 'view_mode:media.small'
+  inline_entity_form: false
+  inline_entity_form_settings:
+    entity_form_display: default
+    display_review: flase
+  entity_browser: editor_media_browser
+  entity_browser_settings:
+    display_review: false
+icon_uuid: 0c8d8f34-e57a-46e7-a0f3-3da1c1d631f6

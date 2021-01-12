@@ -1,0 +1,10 @@
+entity_browser.browser.widget.embed_code:
+  type: mapping
+  label: 'Embed code widget settings'
+  mapping:
+    submit_text:
+      type: string
+      label: 'Submit button text'
+    form_mode:
+      type: string
+      label: 'Inline entity form mode'

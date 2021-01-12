@@ -1,0 +1,39 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.field_preview
+    - field.field.media.file.field_media_file
+    - field.field.media.file.field_media_in_library
+    - image.style.field_preview
+    - media.type.file
+  module:
+    - image
+id: media.file.field_preview
+targetEntityType: media
+bundle: file
+mode: field_preview
+content:
+  name:
+    label: hidden
+    type: string
+    weight: 1
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    region: content
+  thumbnail:
+    type: image
+    weight: 0
+    label: hidden
+    settings:
+      image_style: field_preview
+      image_link: ''
+    third_party_settings: {  }
+    region: content
+hidden:
+  created: true
+  field_media_file: true
+  field_media_in_library: true
+  langcode: true
+  uid: true

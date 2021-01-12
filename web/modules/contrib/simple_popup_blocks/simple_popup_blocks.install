@@ -1,0 +1,159 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the dbtng_example module.
+ */
+
+use Drupal\Core\Database\Database;
+
+/**
+ * Implements hook_schema().
+ *
+ * Defines the database tables used by this module.
+ *
+ * @see hook_schema()
+ */
+function simple_popup_blocks_schema() {
+
+  $schema['simple_popup_blocks'] = [
+    'description' => 'Stores simple_popup_blocks entries.',
+    'fields' => [
+      'pid' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique simple_popup_blocks ID.',
+      ],
+      'identifier' => [
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => "Popup identifier",
+      ],
+      'type' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => "Popup types i.e drupal block or custom",
+      ],
+      'css_selector' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => "Css selector for div",
+      ],
+      'layout' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 4,
+        'description' => "Popup layout",
+      ],
+      'visit_counts' => [
+        'type' => 'blob',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => 'Visit counts value',
+      ],
+      'overlay' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 1,
+        'description' => "Popup overlay. 1 is true",
+      ],
+      'escape' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 1,
+        'description' => "ESC button to close popup",
+      ],
+      'trigger_method' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => "Popup trigger method",
+      ],
+      'trigger_selector' => [
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => "Popup trigger selector",
+      ],
+      'delay' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => "Popup delay in seconds",
+      ],
+      'minimize' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 1,
+        'description' => "Enable Popup minimize button",
+      ],
+      'close' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 1,
+        'description' => "Enable Popup close button",
+      ],
+      'width' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 400,
+        'description' => "Popup width in px",
+      ],
+      'cookie_expiry' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 100,
+        'description' => "Cookie expiry in days",
+      ],
+      'status' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 1,
+        'description' => "Popup status",
+      ],
+    ],
+    'primary key' => ['pid'],
+    'unique keys' => [
+      'identifier' => ['identifier'],
+    ],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Add visit counts field in simple_popup_blocks table.
+ */
+function simple_popup_blocks_update_8101(&$sandbox) {
+  $visit_counts = [
+    'type' => 'blob',
+    'size' => 'big',
+    'not null' => FALSE,
+    'description' => 'Visit counts value',
+  ];
+  $schema = Database::getConnection()
+    ->schema();
+  $schema
+    ->addField('simple_popup_blocks', 'visit_counts', $visit_counts);
+}
+
+/**
+ * Add cookie_expiry field in simple_popup_blocks table.
+ */
+function simple_popup_blocks_update_8102() {
+  $cookie_expiry = [
+    'type' => 'int',
+    'not null' => TRUE,
+    'default' => 100,
+    'description' => "Cookie expiry in days",
+  ];
+  $schema = Database::getConnection()
+    ->schema();
+  $schema
+    ->addField('simple_popup_blocks', 'cookie_expiry', $cookie_expiry);
+}

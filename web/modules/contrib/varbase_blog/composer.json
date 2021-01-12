@@ -1,0 +1,55 @@
+{
+  "name": "drupal/varbase_blog",
+  "description": "Provides Blog post content type and related configuration. Use Blog to publish blog post by different authors in the Blog section of the site.",
+  "type": "drupal-module",
+  "homepage": "https://www.drupal.org/project/varbase_blog",
+  "license": "GPL-2.0-or-later",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "Vardot",
+      "homepage": "https://www.drupal.org/vardot",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/varbase_blog",
+    "source": "http://cgit.drupalcode.org/varbase_blog"
+  },
+  "repositories": {
+    "drupal": {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    },
+    "assets": {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  },
+  "require": {
+    "composer/installers": "~1.0 || ~2.0",
+    "oomphinc/composer-installers-extender": "~1.0 || ~2.0",
+    "cweagans/composer-patches": "~1.0",
+    "drupal/core": "^8.8.0 || ~9.0.0",
+    "drupal/varbase_core": "~8.0 || 8.8.x-dev",
+    "drupal/varbase_media": "~7.0 || 8.7.x-dev",
+    "drupal/varbase_seo": "~6.0 || 8.6.x-dev",
+    "drupal/taxonomy_menu": "3.4",
+    "drupal/length_indicator": "~1.0",
+    "drupal/advanced_text_formatter": "~2.0",
+    "drupal/maxlength": "~1.0"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-8.x-8.x": "8.8.x-dev"
+    },
+    "enable-patching": true,
+    "composer-exit-on-patch-failure": true,
+    "patches": {
+      "drupal/taxonomy_menu": {
+        "Issue #2939143: Fixed Undefined method TaxonomyMenu::generateTaxonomyLinks()":
+        "https://www.drupal.org/files/issues/2018-12-23/2939143-10.patch"
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.s01_standard
+label: 'Size 01 standard 16:9'
+targetEntityType: media
+cache: true

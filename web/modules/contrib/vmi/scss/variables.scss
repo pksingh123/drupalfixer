@@ -1,0 +1,76 @@
+@import "../node_modules/rfs/scss";
+
+// Grid breakpoints ( Bootstrap 4 )
+//
+// Define the minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries.
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+) !default;
+
+// ---------------------------------------------------------------------------.
+
+// RFS - Responsive Font Size variables.
+// Base font size
+// https://github.com/twbs/rfs
+$rfs-base-font-size: 1.25rem !default;
+$rfs-font-size-unit: rem !default;
+
+// Breakpoint at where font-size starts decreasing if screen width is smaller
+$rfs-breakpoint: map-get($grid-breakpoints, "xl") !default;
+$rfs-breakpoint-unit: px !default;
+
+// Resize font size based on screen height and width
+$rfs-two-dimensional: true !default;
+
+// Factor of decrease
+$rfs-factor: 10 !default;
+
+// Generate enable or disable classes. Possibilities: false, "enable" or "disable"
+$rfs-class: true !default;
+
+// 1 rem = $rfs-rem-value px
+$rfs-rem-value: 18 !default;
+
+// Safari iframe resize bug: https://github.com/twbs/rfs/issues/14
+$rfs-safari-iframe-resize-bug-fix: false !default;
+
+// Disable RFS by setting $enable-responsive-font-sizes to false
+$enable-responsive-font-sizes: true !default;
+
+// -------------------------------------------------------------------------.
+
+// View modes inventory variables.
+
+// View modes inventory's default h3 title font size.
+$xlarge-title-font-size: 2rem;
+$large-title-font-size: 1.8rem;
+$medium-title-font-size: 1.4rem;
+$small-title-font-size: 1.4rem;
+$xsmall-title-font-size: 1.2rem;
+
+// Tout default styles.
+$tout-title-color: #fff;
+$tout-xlarge-title-font-size: 4rem;
+$tout-content-stop1-location: 65%;
+$tout-content-stop1-color: transparent;
+$tout-content-stop2-location: 105%;
+$tout-content-stop2-color: #000;
+$tout-content-hover-opacity: 0.9;
+
+// Hero default styles.
+$hero-title-color: #fff;
+$hero-xlarge-title-font-size: 3rem;
+$hero-content-hover-opacity: 0.7;
+$hero-content-background-color1: rgb(0,0,0);
+$hero-content-background-color2: rgba(0,0,0,0.7);
+
+$grid-columns: 12;
+$grid-gutter-width: 30px;
+$view-modes-padding: floor(($grid-gutter-width / 2));
+$view-modes-h3-margin: 0.4em 0;

@@ -1,0 +1,68 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.text_teaser_large
+    - field.field.node.CONTENT_TYPE_NAME.body
+    - node.type.CONTENT_TYPE_NAME
+  module:
+    - ds
+    - smart_trim
+    - user
+third_party_settings:
+  ds:
+    layout:
+      id: text_teaser_large
+      library: vmi/text_teaser_large
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        wrappers:
+          main: div
+        outer_wrapper: article
+        attributes: ''
+        link_attribute: ''
+        link_custom: ''
+        classes:
+          layout_class: {  }
+    regions:
+      main:
+        - node_title
+        - body
+    fields:
+      node_title:
+        plugin_id: node_title
+        weight: 1
+        label: hidden
+        formatter: default
+        settings:
+          link: true
+          wrapper: h3
+          class: ''
+id: node.CONTENT_TYPE_NAME.text_teaser_large
+targetEntityType: node
+bundle: CONTENT_TYPE_NAME
+mode: text_teaser_large
+content:
+  body:
+    type: smart_trim
+    weight: 2
+    label: hidden
+    settings:
+      trim_length: '40'
+      trim_type: words
+      trim_suffix: ' ...'
+      more_link: '0'
+      more_text: More
+      summary_handler: full
+      trim_options:
+        text: text
+      more_class: more-link
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_image: true
+  field_video: true
+  field_media: true
+  langcode: true
+  links: true

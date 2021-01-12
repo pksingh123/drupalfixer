@@ -1,0 +1,870 @@
+<?php
+
+/**
+ * @file
+ * Contains varbase_media.module.
+ */
+
+use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\editor\Entity\Editor;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\entity_browser_generic_embed\OverrideHelper;
+use Drupal\varbase_media\Plugin\media\Source\VarbaseMediaRemoteVideo;
+use Drupal\Component\Utility\UrlHelper;
+use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\Core\Language\LanguageInterface;
+use Drupal\image\Entity\ImageStyle;
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
+use Drupal\Core\Url;
+use Drupal\file\Entity\File;
+use Drupal\responsive_image\Entity\ResponsiveImageStyle;
+use Drupal\media\OEmbed\Provider;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\image\Plugin\Field\FieldType\ImageItem;
+
+/**
+ * Implements hook_preprocess_field().
+ */
+function varbase_media_preprocess_field(&$variables) {
+
+  if ($variables['element']['#formatter'] == 'varbase_oembed') {
+
+    // Provide an extra variable to the field template when the field uses
+    // a formatter of type 'varbase_oembed'.
+    $iframe_url_helper = \Drupal::service('media.oembed.iframe_url_helper');
+
+    $entity = $variables['element']['#object'];
+
+    $view_mode = $variables['element']['#view_mode'];
+    $field_name = $variables['element']['#field_name'];
+    $bundle = $variables['element']['#bundle'];
+
+    // Get the field formatter settings...
+    $entity_display = EntityViewDisplay::collectRenderDisplay($entity, $view_mode);
+    $field_display = $entity_display->getComponent($field_name);
+
+    if ($bundle == "remote_video") {
+      $max_width = $field_display['settings']['max_width'];
+      $max_height = $field_display['settings']['max_height'];
+      $item = $variables['element']["#items"]->first();
+
+      $main_property = $item->getFieldDefinition()->getFieldStorageDefinition()->getMainPropertyName();
+      $value = $item->{$main_property};
+      $provider = $entity->field_provider->value;
+      $url = Url::fromRoute('media.oembed_iframe', [], [
+        'query' => [
+          'url' => $value,
+          'max_width' => $max_width,
+          'max_height' => $max_height,
+          'type' => "remote_video",
+          'provider' => strtolower($provider),
+          'view_mode' => $view_mode,
+          'hash' => $iframe_url_helper->getHash($value, $max_width, $max_height, $provider, $view_mode),
+        ],
+      ]);
+
+      $variables['items'][0]['content']['#attributes']['src'] = $url->toString();
+    }
+  }
+  elseif ($variables['element']['#formatter'] == 'oembed') {
+    // Fallback option for oembed old way, In case of change back to oembed.
+    // -------
+    // Provide an extra variable to the field template when the field uses
+    // a formatter of type 'oembed'.
+    $resource_fetcher = \Drupal::service('media.oembed.resource_fetcher');
+    $url_resolver = \Drupal::service('media.oembed.url_resolver');
+    $iframe_url_helper = \Drupal::service('media.oembed.iframe_url_helper');
+
+    $entity = $variables['element']['#object'];
+
+    $view_mode = $variables['element']['#view_mode'];
+    $field_name = $variables['element']['#field_name'];
+    $bundle = $variables['element']['#bundle'];
+
+    // Get the field formatter settings...
+    $entity_display = EntityViewDisplay::collectRenderDisplay($entity, $view_mode);
+    $field_display = $entity_display->getComponent($field_name);
+
+    if ($bundle == "remote_video") {
+      $max_width = $field_display['settings']['max_width'];
+      $max_height = $field_display['settings']['max_height'];
+      $item = $variables['element']["#items"]->first();
+      $main_property = $item->getFieldDefinition()->getFieldStorageDefinition()->getMainPropertyName();
+      $value = $item->{$main_property};
+
+      // Fallback option for oembed old way, In case of change back to oembed
+      // fetch resource way.
+      $resource_url = $url_resolver->getResourceUrl($value, $max_width, $max_height);
+      $resource = $resource_fetcher->fetchResource($resource_url);
+      $provider = $resource->getProvider()->getName();
+      $url = Url::fromRoute('media.oembed_iframe', [], [
+        'query' => [
+          'url' => $value,
+          'max_width' => $max_width,
+          'max_height' => $max_height,
+          'type' => "remote_video",
+          'provider' => strtolower($provider),
+          'view_mode' => $view_mode,
+          'hash' => $iframe_url_helper->getHash($value, $max_width, $max_height, $provider, $view_mode),
+        ],
+      ]);
+
+      $variables['items'][0]['content']['#attributes']['src'] = $url->toString();
+    }
+  }
+
+  // Add the Varbase Media Blazy Blurry behaviour.
+  $use_blazy_blurry = \Drupal::config('varbase_media.settings')->get('use_blazy_blurry');
+  if (isset($use_blazy_blurry) && $use_blazy_blurry === TRUE) {
+
+    if (!empty($variables['items'])) {
+      foreach ($variables['items'] as &$item) {
+        if (!empty($item['content']['#theme'])
+          && $item['content']['#theme'] === 'blazy') {
+
+          $entity = $variables['element']['#object'];
+          $view_mode = $variables['element']['#view_mode'];
+          $field_name = $variables['element']['#field_name'];
+
+          $entity_display = EntityViewDisplay::collectRenderDisplay($entity, $view_mode);
+          $field_display = $entity_display->getComponent($field_name);
+
+          $build_item = $item['content']['#build']['item'];
+          $value = $build_item->getValue();
+          $file = File::load($value['target_id']);
+          $value['_attributes']['uri'] = $file->getFileUri();
+
+          if (isset($item['content']['#build'])
+            && isset($item['content']['#build']['settings'])
+            && isset($item['content']['#build']['settings']['responsive_image_style'])) {
+            $value['_attributes']['responsive_image_style'] = $item['content']['#build']['settings']['responsive_image_style'];
+          }
+
+          if (!empty($item['content']['#image_style'])) {
+            $value['_attributes']['image_style'] = $item['content']['#image_style'];
+          }
+
+          $build_item->setValue($value);
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_presave().
+ */
+function varbase_media_entity_presave(EntityInterface $entity) {
+  if ($entity->getEntityType()->id() == 'media' && $entity->bundle->target_id == 'remote_video') {
+    // If the field_provider exists in the remote video media type.
+    $field_field_media_remote_video_field_provider = FieldConfig::loadByName('media', 'remote_video', 'field_provider');
+    if (isset($field_field_media_remote_video_field_provider)) {
+      // Fetch the resource from the URL and save in the field_provider.
+      $url_resolver = \Drupal::service('media.oembed.url_resolver');
+      $resource_fetcher = \Drupal::service('media.oembed.resource_fetcher');
+      $resource_url = $url_resolver->getResourceUrl(($entity->field_media_oembed_video->value));
+      $resource = $resource_fetcher->fetchResource($resource_url);
+      $provider = strtolower($resource->getProvider()->getName());
+      if ($entity->field_provider->value != $provider) {
+        $entity->set('field_provider', $provider);
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function varbase_media_preprocess_media_oembed_iframe(&$variables) {
+  // Send variables for all oembed iframe theme template.
+  $query = \Drupal::request()->query;
+  $variables['type'] = $query->get('type');
+  $variables['provider'] = $query->get('provider');
+  $variables['view_mode'] = $query->get('view_mode');
+  $variables['base_path'] = base_path();
+  $variables['varbase_media_path'] = \Drupal::service('module_handler')->getModule('varbase_media')->getPath();
+}
+
+/**
+ * Implements hook_theme_suggestions_media_oembed_iframe_alter().
+ */
+function varbase_media_theme_suggestions_media_oembed_iframe_alter(&$suggestions, &$vars) {
+  // Suggestions go here.
+  $query = \Drupal::request()->query;
+  $type = $query->get('type');
+  $provider = $query->get('provider');
+  $view_mode = $query->get('view_mode');
+  if ($type && $provider) {
+    $suggestions[] = "media_oembed_iframe__" . $provider;
+    $suggestions[] = "media_oembed_iframe__" . $provider . "__" . $view_mode;
+    $suggestions[] = "media_oembed_iframe__" . $view_mode;
+    $suggestions[] = "media_oembed_iframe__" . $type;
+    $suggestions[] = "media_oembed_iframe__" . $type . "__" . $view_mode;
+    $suggestions[] = "media_oembed_iframe__" . $type . "__" . $provider;
+    $suggestions[] = "media_oembed_iframe__" . $type . "__" . $provider . "__" . $view_mode;
+  }
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function varbase_media_page_attachments(array &$page) {
+  // Attached the varbase media common library.
+  $page['#attached']['library'][] = 'varbase_media/common';
+
+  if (!(\Drupal::currentUser()->isAnonymous())) {
+    // Attached the varbase media common logged in users library.
+    $page['#attached']['library'][] = 'varbase_media/common_logged';
+  }
+
+  if (Drupal::service('module_handler')->moduleExists('blazy')) {
+    // Attach the Blazy load library.
+    $page['#attached']['library'][] = 'blazy/load';
+
+    // Add the Varbase Media Blazy Blurry behaviour.
+    $use_blazy_blurry = \Drupal::config('varbase_media.settings')->get('use_blazy_blurry');
+    if (isset($use_blazy_blurry) && $use_blazy_blurry === TRUE) {
+      $page['#attached']['library'][] = 'varbase_media/blazy_blurry';
+    }
+  }
+
+}
+
+/**
+ * Implements hook_ckeditor_css_alter().
+ */
+function varbase_media_ckeditor_css_alter(array &$css, Editor $editor) {
+
+  // Varbase media path.
+  $varbase_media_path = Drupal::service('module_handler')->getModule('varbase_media')->getPath();
+
+  // Attached the varbase media common style.
+  $css[] = $varbase_media_path . '/css/varbase_media.common.css';
+
+  // Attached the varbase media common logged in users style.
+  $css[] = $varbase_media_path . '/css/varbase_media.common_logged.css';
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function varbase_media_form_entity_embed_dialog_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Only at the embed step.
+  if ($form_state->get('step') == 'embed') {
+
+    // Get the entity values and attributes.
+    $entity_element = [];
+    $entity_element += $form_state->get('entity_element');
+    $form_state->set('entity_element', $entity_element);
+    $entity = $form_state->get('entity');
+
+    // Get the entity bundle type.
+    $bundle_type = $entity->bundle();
+    $builder = \Drupal::entityTypeManager()->getViewBuilder($entity->getEntityTypeId());
+
+    switch ($bundle_type) {
+      // ----------------------------------------------------------------------.
+      case "image":
+
+        // Image Media for review.
+        $media_view_mode = $builder->view($entity, 's03');
+        $media_markup = \Drupal::service('renderer')->renderRoot($media_view_mode);
+
+        // Render the Embed entity.
+        $form['entity'] = [
+          '#type' => 'item',
+          '#markup' => $media_markup,
+        ];
+
+        // Change the "data align" field from radio buttons to Select list.
+        $form['attributes']['data-align']['#type'] = 'select';
+        $form['attributes']['data-align']['#wrapper_attributes'] = '';
+        $form['attributes']['data-align']['#description'] = t('Choose the positioning of the image.');
+        $form['attributes']['data-align']['#weight'] = -10;
+
+        // Add description for the caption field.
+        $form['attributes']['data-caption'] += [
+          '#description' => t('A caption will be displayed under the image, to describe it in context of your content.'),
+        ];
+
+        // Adding the updated alt text to the media entity.
+        if (isset($entity_element['alt'])) {
+          $entity->field_media_image->alt = $entity_element['alt'];
+        }
+
+        // Adding the updated title text to the media entity.
+        if (isset($entity_element['title'])) {
+          $entity->field_media_image->title = $entity_element['title'];
+        }
+
+        if (isset($form['attributes']['data-entity-embed-display-settings'])) {
+          $form['attributes']['data-entity-embed-display-settings']['link_url']['#description'] = t('Start typing the title of a piece of content to select it. You can also enter an <br /> internal path such as /node/add or an external URL such as http://example.com.');
+        }
+
+        $entity->save();
+        break;
+
+      // ----------------------------------------------------------------------.
+      case "video":
+      case "remote_video":
+
+        // Video Media for review.
+        $media_view_mode = $builder->view($entity, 's06');
+        $media_markup = \Drupal::service('renderer')->renderRoot($media_view_mode);
+
+        // Render the Embed entity.
+        $form['entity'] = [
+          '#type' => 'item',
+          '#markup' => $media_markup,
+        ];
+
+        if (isset($form['attributes']['data-align'])) {
+          unset($form['attributes']['data-align']);
+        }
+
+        if (isset($form['attributes']['data-entity-embed-display-settings'])) {
+          unset($form['attributes']['data-entity-embed-display-settings']);
+        }
+
+        if (isset($form['attributes']['data-caption'])) {
+          unset($form['attributes']['data-caption']);
+        }
+
+        if (isset($form['attributes']['data-entity-embed-display'])) {
+          $form['attributes']['data-entity-embed-display']['#access'] = FALSE;
+          $form['attributes']['data-entity-embed-display']['#default_value'] = 'view_mode:media.original';
+        }
+
+        break;
+
+      // ----------------------------------------------------------------------.
+      case "gallery":
+
+        // Gallery Media for review.
+        $media_view_mode = $builder->view($entity, 'browser_teaser');
+        $media_markup = \Drupal::service('renderer')->renderRoot($media_view_mode);
+
+        // Render the Embed entity.
+        $form['entity'] = [
+          '#type' => 'item',
+          '#markup' => '<div class="gallery-entity-embed-dialog-step--embed"><div class="media-library-item">' . $media_markup . '</div></div>',
+        ];
+
+        // Render the Embed entity.
+        if (isset($form['attributes']['data-align'])) {
+          unset($form['attributes']['data-align']);
+        }
+
+        if (isset($form['attributes']['data-entity-embed-display-settings'])) {
+          unset($form['attributes']['data-entity-embed-display-settings']);
+        }
+
+        if (isset($form['attributes']['data-caption'])) {
+          unset($form['attributes']['data-caption']);
+        }
+
+        if (isset($form['attributes']['data-entity-embed-display'])) {
+          $form['attributes']['data-entity-embed-display']['#access'] = FALSE;
+          $form['attributes']['data-entity-embed-display']['#default_value'] = 'view_mode:media.full';
+        }
+        break;
+
+      default:
+        if (isset($form['attributes']['data-entity-embed-display-settings'])) {
+          unset($form['attributes']['data-entity-embed-display-settings']);
+        }
+    }
+
+    if (Drupal::service('module_handler')->moduleExists('blazy')) {
+      // Attach the Blazy library.
+      $form['#attached']['library'][] = 'blazy/load';
+    }
+
+    // No revision information or revision log message.
+    if (isset($form['revision_information'])) {
+      $form['revision_information']['#disabled'] = TRUE;
+      $form['revision_information']['#attributes']['style'][] = 'display:none;';
+      $form['revision_information']['#prefix'] = '<div style="display:none;">';
+      $form['revision_information']['#suffix'] = '</div>';
+    }
+
+    // Hide revistion.
+    if (isset($form['revision'])) {
+      $form['revision']['#default_value'] = TRUE;
+      $form['revision']['#disabled'] = TRUE;
+      $form['revision']['#attributes']['style'][] = 'display:none;';
+    }
+
+    // Hide revistion log message.
+    if (isset($form['revision_log_message'])) {
+      $form['revision_log_message']['#disabled'] = TRUE;
+      $form['revision_log_message']['#attributes']['style'][] = 'display:none;';
+    }
+  }
+}
+
+/**
+ * Implements hook_inline_entity_form_entity_form_alter().
+ */
+function varbase_media_inline_entity_form_entity_form_alter(&$entity_form, &$form_state) {
+
+  // No revision information or revision log message.
+  if (isset($entity_form['revision_information'])) {
+    $entity_form['revision_information']['#disabled'] = TRUE;
+    $entity_form['revision_information']['#attributes']['style'][] = 'display:none;';
+    $entity_form['revision_information']['#prefix'] = '<div style="display:none;">';
+    $entity_form['revision_information']['#suffix'] = '</div>';
+  }
+
+  // Hide revistion.
+  if (isset($entity_form['revision'])) {
+    $entity_form['revision']['#default_value'] = TRUE;
+    $entity_form['revision']['#disabled'] = TRUE;
+    $entity_form['revision']['#attributes']['style'][] = 'display:none;';
+  }
+
+  // Hide revistion log message.
+  if (isset($entity_form['revision_log_message'])) {
+    $entity_form['revision_log_message']['#disabled'] = TRUE;
+    $entity_form['revision_log_message']['#attributes']['style'][] = 'display:none;';
+  }
+}
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function varbase_media_theme_registry_alter(&$theme_registry) {
+  // Varbase media path.
+  $varbase_media_path = Drupal::service('module_handler')->getModule('varbase_media')->getPath();
+  $theme_registry['entity_embed_container']['path'] = $varbase_media_path . '/templates';
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function varbase_media_preprocess_entity_embed_container(&$variables) {
+  $variables['url'] = isset($variables['element']['#context']['data-entity-embed-display-settings']['link_url']) ? UrlHelper::filterBadProtocol($variables['element']['#context']['data-entity-embed-display-settings']['link_url']) : '';
+}
+
+/**
+ * Implements hook_entity_view_alter().
+ */
+function varbase_media_entity_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
+
+  if ($entity->getEntityTypeId() == 'media'
+    && $build['#view_mode'] != 'field_preview') {
+
+    $build['#attached']['library'][] = 'varbase_media/varbase_video_player';
+
+    if (isset($build['field_media_cover_image'])
+      && isset($build['field_media_cover_image']['#items'])) {
+
+      $fields = $build['field_media_cover_image']['#items'];
+
+      if (is_object($fields)) {
+
+        // Hide thumbnail of media if we do have cover image data.
+        if (isset($build['thumbnail'])) {
+          $build['thumbnail']['#access'] = FALSE;
+        }
+
+        $build['field_media_cover_image']['#attached']['library'][] = 'varbase_media/varbase_video_player';
+      }
+    }
+
+    // Attach the varbase media video library for video embed field.
+    if (isset($build['field_media_oembed_video'])
+      && isset($build['field_media_oembed_video'][0])) {
+
+      $build['field_media_oembed_video'][0]['#attached']['library'][] = 'varbase_media/varbase_video_player';
+    }
+
+    // Attach the varbase media video library for video file field.
+    if (isset($build['field_media_video_file'])) {
+      $build['field_media_video_file']['#attached']['library'][] = 'varbase_media/varbase_video_player';
+    }
+  }
+}
+
+/**
+ * Implements hook_media_source_info_alter().
+ */
+function varbase_media_media_source_info_alter(array &$sources) {
+
+  // Remote Video.
+  // --------------------------------------------------------------------------.
+  $sources['oembed:video']['input_match'] = [
+    'constraint' => 'oembed_resource',
+    'field_types' => [
+      'link',
+      'string',
+      'string_long',
+    ],
+  ];
+  $sources['oembed:video']['preview'] = TRUE;
+  OverrideHelper::pluginClass($sources['oembed:video'], VarbaseMediaRemoteVideo::class);
+
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function varbase_media_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_state->getFormObject() instanceof EntityFormInterface) {
+    $entity_type = $form_state->getFormObject()->getEntity()->getEntityTypeId();
+
+    // Only for media entity type.
+    if ($entity_type == 'media') {
+      // No revision information or revision log message.
+      if (isset($form['revision_information'])) {
+        $form['revision_information']['#disabled'] = TRUE;
+        $form['revision_information']['#attributes']['style'][] = 'display:none;';
+        $form['revision_information']['#prefix'] = '<div style="display:none;">';
+        $form['revision_information']['#suffix'] = '</div>';
+      }
+
+      // Hide revistion.
+      if (isset($form['revision'])) {
+        $form['revision']['#default_value'] = TRUE;
+        $form['revision']['#disabled'] = TRUE;
+        $form['revision']['#attributes']['style'][] = 'display:none;';
+      }
+
+      // Hide revistion log message.
+      if (isset($form['revision_log_message'])) {
+        $form['revision_log_message']['#disabled'] = TRUE;
+        $form['revision_log_message']['#attributes']['style'][] = 'display:none;';
+      }
+    }
+  }
+
+  if ($form_id == 'entity_browser_image_browser_form'
+      || $form_id == 'entity_browser_media_browser_form'
+      || $form_id == 'entity_browser_editor_media_browser_form') {
+    $form['#attached']['library'][] = 'varbase_media/auto_fill_media_data';
+  }
+
+  if ($form_id === "entity_browser_widgets_config_form") {
+
+    // Attach the varbase media common library.
+    $form['#attached']['library'][] = 'varbase_media/common';
+
+    // Add the Varbase Media Blazy Blurry behaviour.
+    $use_blazy_blurry = \Drupal::config('varbase_media.settings')->get('use_blazy_blurry');
+    if (isset($use_blazy_blurry) && $use_blazy_blurry === TRUE) {
+      $form['#attached']['library'][] = 'varbase_media/blazy_blurry';
+    }
+
+    if (!(\Drupal::currentUser()->isAnonymous())) {
+      // Attached the varbase media common logged in users library.
+      $form['#attached']['library'][] = 'varbase_media/common_logged';
+    }
+  }
+
+  if ($form_id === 'editor_media_dialog') {
+    if (isset($form_state->getUserInput()['editor_object'])) {
+      $editor_object = $form_state->getUserInput()['editor_object'];
+      $media_embed_element = $editor_object['attributes'];
+
+      if (isset($media_embed_element['data-entity-type'])
+       && $media_embed_element['data-entity-type'] == 'media') {
+        $media = \Drupal::service('entity.repository')->loadEntityByUuid('media', $media_embed_element['data-entity-uuid']);
+
+        if (isset($media)) {
+          $media_type = $media->bundle();
+
+          switch ($media_type) {
+            case 'image':
+              if (isset($form['alt'])) {
+                $form['alt']['#required'] = TRUE;
+
+                $field_definition = $media->getSource()->getSourceFieldDefinition($media->bundle->entity);
+                $item_class = $field_definition->getItemDefinition()->getClass();
+                if (is_a($item_class, ImageItem::class, TRUE)) {
+                  $image_field_name = $field_definition->getName();
+
+                  // We'll want the alt text from the same language as the host.
+                  if (!empty($editor_object['hostEntityLangcode']) && $media->hasTranslation($editor_object['hostEntityLangcode'])) {
+                    $media = $media->getTranslation($editor_object['hostEntityLangcode']);
+                  }
+                  $alt = isset($media_embed_element['alt']) ? $media_embed_element['alt'] : $media->{$image_field_name}->alt;
+                  $form['alt']['#default_value'] = $alt;
+                  $form['alt']['#placeholder'] = $media->{$image_field_name}->alt;
+                }
+              }
+              break;
+
+            case 'audio':
+            case 'file':
+              if (isset($form['view_mode'])) {
+                $form['view_mode']['#access'] = FALSE;
+              }
+              break;
+
+            case 'video':
+            case 'remote_video':
+              if (isset($form['caption'])) {
+                $form['caption']['#access'] = FALSE;
+                $form['caption']['#default_value'] = FALSE;
+              }
+              break;
+          }
+        }
+      }
+    }
+  }
+
+}
+
+/**
+ * Implements hook_token_info_alter().
+ */
+function varbase_media_token_info_alter(&$data) {
+
+  $data['tokens']['media']['social_large'] = [
+    'name' => t('Social Large'),
+    'description' => t("Social Large (1200x630) image for the selected media type."),
+    'module' => 'media',
+    'type' => 'url',
+  ];
+
+  $data['tokens']['media']['social_medium'] = [
+    'name' => t('Social Medium'),
+    'description' => t("Social Medium (600x315) image for the selected media type."),
+    'module' => 'media',
+    'type' => 'url',
+  ];
+
+  $data['tokens']['media']['social_small'] = [
+    'name' => t('Social Small'),
+    'description' => t("Social Small (280x150) image for the selected media type."),
+    'module' => 'media',
+    'type' => 'url',
+  ];
+}
+
+/**
+ * Implements hook_tokens().
+ */
+function varbase_media_tokens($type, $tokens, array $data, array $options, BubbleableMetadata $bubbleable_metadata) {
+
+  if (isset($options['langcode'])) {
+    $langcode = $options['langcode'];
+  }
+  else {
+    $langcode = LanguageInterface::LANGCODE_DEFAULT;
+  }
+
+  $replacements = [];
+  if ($type === 'media' && !empty($data['media'])) {
+    /** @var \Drupal\media\MediaInterface $media_entity */
+    $media_entity = \Drupal::service('entity.repository')->getTranslationFromContext($data['media'], $langcode, ['operation' => 'media_entity_tokens']);
+
+    foreach ($tokens as $token_name => $original) {
+      switch ($token_name) {
+
+        // Social Large (1200x630) image for the selected media type.
+        case 'social_large':
+          $replacements[$original] = _varbase_media_image_url($media_entity, 'social_large');
+          break;
+
+        // Social Medium (600x315) image for the selected media type.
+        case 'social_medium':
+          $replacements[$original] = _varbase_media_image_url($media_entity, 'social_medium');
+          break;
+
+        // Social Small (280x150) image for the selected media type.
+        case 'social_small':
+          $replacements[$original] = _varbase_media_image_url($media_entity, 'social_small');
+          break;
+      }
+    }
+  }
+
+  return $replacements;
+}
+
+/**
+ * Get the URL with image style for a selected media entity.
+ */
+function _varbase_media_image_url($media_entity, $style_name = NULL) {
+
+  $image_field_name = _varbase_media_default_image_field_name($media_entity);
+
+  if ($img_entity = $media_entity->get($image_field_name)->first()) {
+    if ($file_entity = $img_entity->get('entity')->getTarget()) {
+      if (!empty($style_name)) {
+        return ImageStyle::load($style_name)
+          ->buildUrl($file_entity->get('uri')
+            ->first()
+            ->getString());
+      }
+      else {
+        return file_create_url($file_entity->get('uri')->getString());
+      }
+    }
+  }
+
+  return NULL;
+}
+
+/**
+ * Get the default image field name for any media entity types.
+ */
+function _varbase_media_default_image_field_name($media_entity) {
+
+  // Media entities with a valied field media image data it will come first.
+  if (isset($media_entity->field_media_image)
+      && !empty($media_entity->get('field_media_image')->first())) {
+    return 'field_media_image';
+  }
+  // Media entities with a valied field media cover image data it will be used.
+  elseif (isset($media_entity->field_media_cover_image)
+      && !empty($media_entity->get('field_media_cover_image')->first())) {
+    return 'field_media_cover_image';
+  }
+  // Media entities without field image or cover image, will get the thumbnail.
+  else {
+    return 'thumbnail';
+  }
+
+}
+
+/**
+ * Implements hook_theme().
+ */
+function varbase_media_theme($existing, $type, $theme, $path) {
+
+  return [
+    'media_oembed_iframe__remote_video' => [
+      'template' => 'media-oembed-iframe--remote-video',
+      'variables' => [
+        'provider' => NULL,
+        'media' => NULL,
+      ],
+    ],
+    'media_entity_gallery_post' => [
+      'variables' => [
+        'post' => NULL,
+        'shortcode' => NULL,
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function varbase_media_preprocess_media_oembed_iframe__remote_video(&$variables) {
+  // Send variables for the remote_video oembed iframe theme template.
+  $query = \Drupal::request()->query;
+  $variables['type'] = $query->get('type');
+  $variables['provider'] = $query->get('provider');
+  $variables['view_mode'] = $query->get('view_mode');
+  $variables['base_path'] = base_path();
+  $variables['varbase_media_path'] = \Drupal::service('module_handler')->getModule('varbase_media')->getPath();
+}
+
+/**
+ * Implements hook_entity_embed_alter().
+ */
+function varbase_media_entity_embed_alter(array &$build, EntityInterface $entity, array &$context) {
+
+  // Only for entity embed review inside the CKEditor.
+  if (\Drupal::routeMatch()->getRouteName() == 'entity_embed.preview') {
+
+    // Switch view mode for gallery in the CKEditor to show the Browser Teaser.
+    if (isset($context['data-embed-button'])
+        && $context['data-embed-button'] == 'gallery') {
+
+      // Remove the contextual links.
+      if (isset($build['#contextual_links'])) {
+        unset($build['#contextual_links']);
+      }
+
+      if ($build['#context']['data-entity-embed-display'] == 'view_mode:media.full') {
+        $build['#context']['data-entity-embed-display'] = 'view_mode:media.browser_teaser';
+        $build['entity']['#view_mode'] = 'browser_teaser';
+      }
+    }
+
+  }
+
+}
+
+/**
+ * Implements hook_preprocess_image().
+ */
+function varbase_media_preprocess_image(&$variables) {
+
+  // Add the Varbase Media Blazy Blurry behaviour.
+  $use_blazy_blurry = \Drupal::config('varbase_media.settings')->get('use_blazy_blurry');
+  if (isset($use_blazy_blurry) && $use_blazy_blurry === TRUE) {
+
+    if (!empty($variables['attributes']['class'])
+      && !empty($variables['attributes']['uri'])) {
+
+      $uri = $variables['attributes']['uri'];
+      $current_uri_with_style = $uri;
+
+      if (!empty($variables['attributes']['responsive_image_style'])) {
+        $responsive_image_style = ResponsiveImageStyle::load($variables['attributes']['responsive_image_style']);
+        // Create Uri from the fallback image style.
+        $fallback_image_style = $responsive_image_style->getFallbackImageStyle();
+        $current_uri_with_style = ImageStyle::load($fallback_image_style)->buildUri($uri);
+      }
+      elseif (!empty($variables['attributes']['image_style'])) {
+        $current_uri_with_style = ImageStyle::load($variables['attributes']['image_style'])->buildUri($uri);
+      }
+
+      $image_style_blazy_blurry = ImageStyle::load('blazy_blurry');
+
+      $img = $image_style_blazy_blurry->buildUri($current_uri_with_style);
+      $image_style_blazy_blurry->createDerivative($current_uri_with_style, $img);
+
+      if (file_exists($uri) && filesize($uri) > 0
+        && file_exists($img) && filesize($img) > 0) {
+
+        // Encode the image in base64 to speed up loading times.
+        $img_file = fopen($img, "r");
+        $img_binary = fread($img_file, filesize($img));
+        $file_type = mime_content_type($img);
+        $img_base64 = 'data:' . $file_type . ';base64,' . base64_encode($img_binary);
+
+        // Update the placeholder URI.
+        $variables['attributes']['src'] = $img_base64;
+
+        unset($variables['attributes']['responsive_image_style']);
+        unset($variables['attributes']['image_style']);
+        unset($variables['attributes']['uri']);
+
+        fclose($img_file);
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_oembed_resource_url_alter().
+ */
+function varbase_media_oembed_resource_url_alter(array &$parsed_url, Provider $provider) {
+  // Process arguments for vimeo videos to be included in oEmbed.
+  if ($provider->getName() == 'Vimeo') {
+    $url = $parsed_url['query']['url'];
+    // Use '/&' as a seporator between arguments.
+    $url = str_replace('&', '/&', $url);
+    $url = str_replace('?', '/&', $url);
+    $parsed_url['query']['url'] = $url;
+  }
+}
+
+/**
+ * Implements hook_library_info_alter().
+ */
+function varbase_media_library_info_alter(array &$libraries, $module) {
+  if ($module === 'media_library' && isset($libraries['widget'])) {
+    $libraries['widget']['dependencies'][] = 'varbase_media/media_library_enhancements';
+  }
+}

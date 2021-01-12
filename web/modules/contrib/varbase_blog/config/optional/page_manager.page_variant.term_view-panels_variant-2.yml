@@ -1,0 +1,61 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - page_manager.page.term_view
+    - views.view.taxonomy_term
+  module:
+    - ctools
+    - panels
+    - views
+id: term_view-panels_variant-2
+label: Default
+variant: panels_variant
+variant_settings:
+  blocks:
+    9b277add-d9da-4e8f-8675-cdaccb69f101:
+      id: 'views_block:taxonomy_term-terms_list_block'
+      label: ''
+      provider: views
+      label_display: '0'
+      views_label: ''
+      items_per_page: none
+      region: main
+      weight: 0
+      uuid: 9b277add-d9da-4e8f-8675-cdaccb69f101
+      context_mapping:
+        tid: taxonomy_term
+  id: panels_variant
+  uuid: 12f61df8-0939-4e8c-937b-5c226fa1ee77
+  label: null
+  weight: 0
+  layout: bs_1col
+  layout_settings:
+    layout:
+      wrapper: div
+      classes:
+        row: row
+      add_layout_class: 1
+      attributes: ''
+    regions:
+      main:
+        wrapper: div
+        classes:
+          col-sm-12: col-sm-12
+        add_region_classes: 1
+        attributes: ''
+  page_title: null
+  storage_type: page_manager
+  storage_id: term_view-panels_variant-2
+  builder: standard
+page: term_view
+weight: -8
+selection_criteria:
+  -
+    id: 'entity_bundle:taxonomy_term'
+    bundles: {  }
+    negate: false
+    context_mapping:
+      taxonomy_term: taxonomy_term
+selection_logic: and
+static_context: {  }

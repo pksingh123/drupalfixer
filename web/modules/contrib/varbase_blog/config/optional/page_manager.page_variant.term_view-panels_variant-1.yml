@@ -1,0 +1,61 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - page_manager.page.term_view
+    - views.view.varbase_blog
+  module:
+    - ctools
+    - panels
+    - views
+id: term_view-panels_variant-1
+label: 'Blog Tags'
+variant: panels_variant
+variant_settings:
+  blocks:
+    a38f98da-a5d2-4fa0-916d-1f65970de672:
+      id: 'views_block:varbase_blog-blog_listing_by_tags_block'
+      label: ''
+      provider: views
+      label_display: '0'
+      views_label: ''
+      items_per_page: none
+      region: main
+      weight: 0
+      uuid: a38f98da-a5d2-4fa0-916d-1f65970de672
+      context_mapping: {  }
+  id: panels_variant
+  uuid: 80c6719e-3cd3-4f71-a0ec-c894da74ac19
+  label: null
+  weight: 0
+  layout: bs_1col
+  layout_settings:
+    layout:
+      wrapper: div
+      classes:
+        row: row
+      add_layout_class: 1
+      attributes: ''
+    regions:
+      main:
+        wrapper: div
+        classes:
+          col-sm-12: col-sm-12
+        add_region_classes: 1
+        attributes: ''
+  page_title: '#[term:name]'
+  storage_type: page_manager
+  storage_id: term_view-panels_variant-1
+  builder: standard
+page: term_view
+weight: -9
+selection_criteria:
+  -
+    id: 'entity_bundle:taxonomy_term'
+    bundles:
+      tags: tags
+    negate: false
+    context_mapping:
+      taxonomy_term: taxonomy_term
+selection_logic: and
+static_context: {  }

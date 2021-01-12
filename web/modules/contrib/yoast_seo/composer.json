@@ -1,0 +1,6 @@
+{
+    "name": "drupal/yoast_seo",
+    "description": "Adds Real-time SEO page analysis and configuration.",
+    "type": "drupal-module",
+    "license": "GPL-2.0+"
+}

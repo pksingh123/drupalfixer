@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.full
+    - media.type.gallery
+  module:
+    - entity_embed
+    - media
+label: Gallery
+id: gallery
+type_id: entity
+type_settings:
+  entity_type: media
+  bundles:
+    - gallery
+  display_plugins:
+    - 'view_mode:media.full'
+  inline_entity_form: true
+  inline_entity_form_settings:
+    entity_form_display: editor
+    display_review: false
+  entity_browser: ''
+  entity_browser_settings:
+    display_review: true
+icon_uuid: 8c288b2b-e69b-439a-a4fa-fe2c582d2ef4

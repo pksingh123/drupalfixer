@@ -1,0 +1,64 @@
+common:
+  version: VERSION
+  css:
+    theme:
+      css/varbase_media.common.css: { every_page: 1 }
+  dependencies:
+    - system/base
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery
+    - core/jquery.once
+common_logged:
+  version: VERSION
+  css:
+    theme:
+      css/theme/media_library.theme.css: { every_page: 1 }
+      css/varbase_media.common_logged.css: { every_page: 1 }
+  dependencies:
+    - system/base
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery
+    - core/jquery.once
+    - varbase_media/auto_fill_media_data
+auto_fill_media_data:
+  version: VERSION
+  js:
+    js/auto-fill-media-data.js: { }
+  dependencies:
+    - system/base
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery
+    - core/jquery.once
+varbase_video_player:
+  version: VERSION
+  css:
+    theme:
+      css/theme/varbase-video-player.theme.css: { }
+  js:
+    js/varbase-video-player.js: { }
+  dependencies:
+    - system/base
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery
+    - core/jquery.once
+youtube_player:
+  version: VERSION
+  js:
+    //www.youtube.com/player_api: { type: external, minified: true }
+vimeo_player:
+  version: VERSION
+  js:
+    //player.vimeo.com/api/player.js: { type: external, minified: true }
+blazy_blurry:
+  version: VERSION
+  css:
+    theme:
+      css/theme/varbase-media-blazy-blurry.theme.css: { }
+media_library_enhancements:
+  version: VERSION
+  js:
+    js/varbase-media-enhancements.js: { }

@@ -1,0 +1,8 @@
+@import "../../variables.scss";
+.tout-view-mode.large {
+  .field--name-node-title {
+    h3 {
+      @include font-size($large-title-font-size);
+    }
+  }
+}

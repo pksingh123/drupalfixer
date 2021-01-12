@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Bootstrap sub-theme.
+ *
+ * Place your custom PHP code in this file.
+ */
+function drupalfixer_preprocess_page(&$vars) {
+    //custom logic of when to include the library
+    // ....
+    $vars['#attached']['library'][] =  'core/drupal.dialog.ajax';  
+}

@@ -1,0 +1,109 @@
+{
+  "name": "drupal/varbase_media",
+  "description": "Manages type of media contents and entity browsers in the site.",
+  "type": "drupal-module",
+  "homepage": "https://www.drupal.org/project/varbase_media",
+  "license": "GPL-2.0-or-later",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "Vardot",
+      "homepage": "https://www.drupal.org/vardot",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/varbase_media",
+    "source": "http://cgit.drupalcode.org/varbase_media"
+  },
+  "repositories": {
+    "drupal": {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    },
+    "assets": {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  },
+  "require": {
+    "composer/installers": "~1.0 || ~2.0",
+    "oomphinc/composer-installers-extender": "~1.0 || ~2.0",
+    "cweagans/composer-patches": "~1.0",
+    "drupal/core": "^8.8.0 || ~9.0.0",
+    "drupal/ds": "~3.0",
+    "drupal/better_exposed_filters": "~5.0",
+    "drupal/views_bulk_operations": "~3.0",
+    "drupal/views_bulk_edit": "~2.0",
+    "drupal/views_infinite_scroll": "~1.0",
+    "drupal/entity_browser": "~2.0",
+    "drupal/entity_browser_enhanced": "~1.0",
+    "drupal/dropzonejs": "2.3",
+    "drupal/entity_embed": "1.1",
+    "drupal/inline_entity_form": "~1.0",
+    "drupal/embed": "~1.0",
+    "drupal/media_entity_instagram": "~3.0",
+    "drupal/media_entity_twitter": "~2.0",
+    "drupal/media_library_edit": "1.0-alpha2",
+    "drupal/media_revisions_ui": "~2.0",
+    "drupal/crop": "~2.0",
+    "drupal/focal_point": "~1.0",
+    "drupal/imagemagick": "~3.0",
+    "drupal/imageapi_optimize": "~3.0",
+    "drupal/blazy": "2.1",
+    "drupal/slick": "~2.0",
+    "drupal/slick_views": "~2.0",
+    "drupal/metatag": "^1.12"
+  },
+  "suggest": {
+    "npm-asset/dropzone": "~4.0: Provides JavaScript library necessary for Dropzone",
+    "npm-asset/blazy": "~1.0: Provides JavaScript library necessary for Blazy loading",
+    "npm-asset/slick-carousel": "~1.0: Provides JavaScript library necessary for Slick Carousel"
+  }, 
+  "extra": {
+    "branch-alias": {
+      "dev-8.x-7.x": "8.7.x-dev"
+    },
+    "installer-types": [
+      "bower-asset",
+      "npm-asset"
+    ],
+    "installer-paths": {
+      "libraries/slick": ["npm-asset/slick-carousel"],
+      "libraries/{$name}": [
+        "type:drupal-library",
+        "type:bower-asset",
+        "type:npm-asset"
+      ]
+    },
+    "drupal-libraries": {
+      "libraries": [
+          {"name": "dropzone","package": "npm-asset/dropzone"},
+          {"name": "blazy", "package": "npm-asset/blazy"},
+          {"name": "slick", "package": "npm-asset/slick-carousel"}
+      ]
+    },
+    "enable-patching": true,
+    "composer-exit-on-patch-failure": true,
+    "patches": {
+      "drupal/entity_embed": {
+        "Issue #3070343: Allow to add a Drupal core link with Link Widget for Image entities using Entity Embed Dialog in CKEditor":
+        "https://www.drupal.org/files/issues/2019-07-25/3070343-8.patch",
+        "Issue #2679875: Inline Entity Form integration":
+        "https://www.drupal.org/files/issues/2020-04-21/2679875-13.patch"
+      },
+      "drupal/media_library_edit": {
+        "Issue #3034205: Open in modal":
+        "https://www.drupal.org/files/issues/2020-06-25/open-in-modal-3034205-43.patch"
+      },
+      "drupal/blazy": {
+        "Issue #3174661: Fix notice: undefined index ratio by check the value if not empty":
+        "https://www.drupal.org/files/issues/2020-10-03/3174661-1.patch"
+      },
+      "drupal/dropzonejs": {
+        "Issue #3051658: Make dropzonejs widget available to the new Media Library in core":
+        "https://www.drupal.org/files/issues/2020-10-26/3051658-12.patch"
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies: {  }
+name: d09
+label: 'Display 09 (900xAuto)'
+effects:
+  26e243a4-d612-42e8-ae52-ced1e0c511af:
+    uuid: 26e243a4-d612-42e8-ae52-ced1e0c511af
+    id: image_scale
+    weight: 1
+    data:
+      width: 900
+      height: null
+      upscale: false
+pipeline: ''

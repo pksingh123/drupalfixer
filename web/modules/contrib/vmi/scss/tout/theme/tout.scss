@@ -1,0 +1,51 @@
+@import "../../variables.scss";
+.tout-view-mode {
+
+  .field--name-node-title {
+    position: static;
+    color: $tout-title-color;
+
+    h3 {
+      position: static;
+      margin: 0;
+      padding: 0;
+      color: $tout-title-color;
+
+      a {
+        color: $tout-title-color;
+        text-decoration: none;
+        position: static;
+
+        &::before {
+          position: absolute;
+          content: '';
+          display: block;
+          overflow: hidden;
+          top: 0;
+          bottom: 0;
+          right: 0;
+          left: 0;        
+          z-index: 2;
+        }
+      }
+    }
+  }
+
+  a {
+    z-index: 3;
+    position: relative;
+  }
+
+  .tout-content {
+    background: linear-gradient(to bottom, $tout-content-stop1-color $tout-content-stop1-location, $tout-content-stop2-color $tout-content-stop2-location) repeat scroll 0 0;
+    background: -webkit-linear-gradient(to bottom, $tout-content-stop1-color $tout-content-stop1-location, $tout-content-stop2-color  $tout-content-stop2-location) repeat scroll 0 0;
+    background: -o-linear-gradient(to bottom, $tout-content-stop1-color $tout-content-stop1-location, $tout-content-stop2-color  $tout-content-stop2-location) repeat scroll 0 0;
+    background: -moz-linear-gradient(to bottom, $tout-content-stop1-color $tout-content-stop1-location, $tout-content-stop2-color  $tout-content-stop2-location) repeat scroll 0 0;
+
+    &:hover,
+    &:focus,
+    &:active {
+      opacity: $tout-content-hover-opacity;
+    }
+  }
+}

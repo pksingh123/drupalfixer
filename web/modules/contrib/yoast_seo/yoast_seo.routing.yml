@@ -1,0 +1,15 @@
+yoast_seo.tokens:
+  path: '/yoast_seo/tokens'
+  defaults:
+    _controller: '\Drupal\yoast_seo\Controller\YoastSeoController::tokens'
+    _title: 'Real-time SEO tokens'
+  requirements:
+    _permission: 'use yoast seo'
+
+yoast_seo.settings:
+  path: 'admin/config/yoast_seo'
+  defaults:
+    _title: 'Real-time SEO settings'
+    _controller: '\Drupal\yoast_seo\Controller\YoastSeoController::settings'
+  requirements:
+    _permission: 'administer yoast seo'

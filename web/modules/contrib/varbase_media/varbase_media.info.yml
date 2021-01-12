@@ -1,0 +1,49 @@
+name: 'Varbase Media'
+description: 'Manages type of media contents and entity browsers in the site.'
+type: module
+package: Varbase
+core_version_requirement: ^8 || ^9
+configure: varbase_media.settings
+components:
+  - entity_browser_generic_embed
+  - varbase_media_twitter
+  - varbase_media_instagram
+dependencies:
+  - drupal:user
+  - drupal:block
+  - drupal:node
+  - drupal:taxonomy
+  - drupal:block_content
+  - drupal:views
+  - drupal:path
+  - drupal:file
+  - drupal:image
+  - drupal:media
+  - drupal:media_library
+  - drupal:breakpoint
+  - drupal:responsive_image
+  - ds:ds
+  - ds:ds_extras
+  - better_exposed_filters:better_exposed_filters
+  - crop:crop
+  - dropzonejs:dropzonejs_eb_widget
+  - embed:embed
+  - entity_browser:entity_browser
+  - entity_browser_enhanced:entity_browser_enhanced
+  - entity_browser:entity_browser_entity_form
+  - varbase_media:entity_browser_generic_embed
+  - entity_embed:entity_embed
+  - focal_point:focal_point
+  - views_infinite_scroll:views_infinite_scroll
+install:
+  - media_library_edit
+  - media_revisions_ui
+  - views_bulk_operations
+  - views_bulk_edit
+  - blazy
+  - slick
+
+# Information added by Drupal.org packaging script on 2020-12-01
+version: '8.x-7.31'
+project: 'varbase_media'
+datestamp: 1606831851

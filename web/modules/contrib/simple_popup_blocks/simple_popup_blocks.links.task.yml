@@ -1,0 +1,9 @@
+simple_popup_blocks.add:
+  title: 'Add popup'
+  route_name: simple_popup_blocks.add
+  base_route: simple_popup_blocks.add
+  
+simple_popup_blocks.manage:
+  title: 'Manage popup'
+  route_name: simple_popup_blocks.manage
+  base_route: simple_popup_blocks.add

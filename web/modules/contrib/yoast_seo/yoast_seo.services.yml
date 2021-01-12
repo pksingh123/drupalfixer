@@ -1,0 +1,7 @@
+services:
+  yoast_seo.manager:
+    class: Drupal\yoast_seo\YoastSeoManager
+    arguments: ['@module_handler']
+  yoast_seo.field_manager:
+    class: Drupal\yoast_seo\YoastSeoFieldManager
+    arguments: []

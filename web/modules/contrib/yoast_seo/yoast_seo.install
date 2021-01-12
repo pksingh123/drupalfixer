@@ -1,0 +1,63 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions for the Yoast SEO for Drupal module.
+ */
+
+/**
+ * Implements hook_install().
+ *
+ * Insert the YoastSeo field in the content view.
+ */
+function yoast_seo_install() {
+  // Enable Yoast SEO for all fields.
+  _yoast_seo_attach_to_all_content_types();
+
+  // Add status overview to content view.
+  _yoast_seo_add_status_to_content_view();
+}
+
+/**
+ * Attach Yoast SEO field to all available content types.
+ */
+function _yoast_seo_attach_to_all_content_types() {
+  $supported_entities = [
+    'node' => 'Node',
+  ];
+  $yoast_seo_manager = \Drupal::service('yoast_seo.manager');
+  foreach ($supported_entities as $entity_type_id => $entity_type_label) {
+    $bundles = $yoast_seo_manager->getAvailableBundles($entity_type_id);
+    foreach ($bundles as $bundle_id => $bundle_label) {
+      $yoast_seo_manager->attachYoastSeoFields($entity_type_id, $bundle_id);
+    }
+  }
+}
+
+/**
+ * Attach Yoast SEO field to the main content view.
+ */
+function _yoast_seo_add_status_to_content_view() {
+  $yoast_seo_manager = \Drupal::service('yoast_seo.manager');
+  $yoast_seo_manager->attachFieldHandlerToContentView();
+}
+
+/**
+ * Detach Yoast SEO fields from all taxonomies.
+ */
+function yoast_seo_update_8001() {
+  $yoast_seo_manager = \Drupal::service('yoast_seo.manager');
+  $entity_type_id = 'taxonomy_term';
+
+  $enabled_bundles = $yoast_seo_manager->getEnabledBundles($entity_type_id);
+  if (!empty($enabled_bundles)) {
+    foreach ($enabled_bundles as $bundle_id) {
+      $yoast_seo_manager->detachYoastSeoFields($entity_type_id, $bundle_id);
+    }
+  }
+
+  // Fields have been marked as deleted. Attempt to delete them straight away.
+  // Anything that's missed now will be cleaned up by cron later.
+  $limit = \Drupal::config('field.settings')->get('purge_batch_size');
+  field_purge_batch($limit);
+}

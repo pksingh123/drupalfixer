@@ -1,0 +1,38 @@
+@import "../../variables.scss";
+.text-teaser-view-mode {
+  &.anchor-all {
+    .main-content {
+      position: relative;
+    }
+
+    .field--name-node-title {
+      position: static;
+
+      h3 {
+        margin: $view-modes-h3-margin;
+        position: static;
+
+        a {
+          position: static;
+
+          &::before {
+            position: absolute;
+            content: '';
+            display: block;
+            overflow: hidden;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;        
+            z-index: 1;
+          }
+        }
+      }
+    }
+
+    a {
+      z-index: 2;
+      position: relative;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+name: 'External Links'
+type: module
+description: 'Modify behavior and appearance of external links.'
+package: User interface
+core: 8.x
+configure: extlink_admin.settings
+core_version_requirement: ^8 || ^9
+
+# Information added by Drupal.org packaging script on 2020-09-29
+version: '8.x-1.5'
+project: 'extlink'
+datestamp: 1601382187

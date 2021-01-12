@@ -1,0 +1,10 @@
+simple_popup_blocks.add:
+  title: Add simple popup blocks
+  route_name: simple_popup_blocks.add
+  parent: system.admin_config_media
+  expanded: TRUE
+
+simple_popup_blocks.manage:
+  title: Manage 
+  route_name: simple_popup_blocks.manage
+  parent: simple_popup_blocks.add

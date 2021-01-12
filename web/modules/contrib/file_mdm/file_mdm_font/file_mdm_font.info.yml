@@ -1,0 +1,13 @@
+type: module
+core_version_requirement: ^8.8 || ^9
+name: File metadata - Font
+description: 'Provides a file metadata plugin for TTF/OTF/WOFF font information.'
+package: File metadata
+configure: file_mdm.settings
+dependencies:
+  - file_mdm:file_mdm
+
+# Information added by Drupal.org packaging script on 2020-04-13
+version: '8.x-2.1'
+project: 'file_mdm'
+datestamp: 1586801066

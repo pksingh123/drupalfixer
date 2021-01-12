@@ -1,0 +1,333 @@
+<?php
+
+/**
+ * @file
+ * Advanced Text Formatter
+ */
+
+use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\Unicode;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Field\WidgetInterface;
+use Drupal\filter\Plugin\Filter;
+
+/**
+ * Implements hook_field_widget_form_alter()
+ */
+// function advanced_text_formatter_field_widget_form_alter(&$element, \Drupal\Core\Form\FormStateInterface $form_state, $context) {
+//   var_dump($element, $context['widget']);
+// }
+
+/**
+ * Implements hook_field_widget_WIDGET_TYPE_form_alter().
+ */
+function advanced_text_formatter_field_widget_string_textfield_form_alter(&$element, FormStateInterface $form_state, $context) {
+  _advanced_text_formatter_widget_alter($element, $form_state, $context);
+}
+
+/**
+ * Implements hook_field_widget_WIDGET_TYPE_form_alter().
+ */
+function advanced_text_formatter_field_widget_text_textfield_form_alter(&$element, FormStateInterface $form_state, $context) {
+  _advanced_text_formatter_widget_alter($element, $form_state, $context);
+}
+
+/**
+ * Implements hook_field_widget_WIDGET_TYPE_form_alter().
+ */
+function advanced_text_formatter_field_widget_string_textarea_form_alter(&$element, FormStateInterface $form_state, $context) {
+  _advanced_text_formatter_widget_alter($element, $form_state, $context);
+}
+
+/**
+ * Implements hook_field_widget_WIDGET_TYPE_form_alter().
+ */
+function advanced_text_formatter_field_widget_text_textarea_form_alter(&$element, FormStateInterface $form_state, $context) {
+  _advanced_text_formatter_widget_alter($element, $form_state, $context);
+}
+
+/**
+ * Implements hook_field_widget_WIDGET_TYPE_form_alter().
+ */
+function advanced_text_formatter_field_widget_text_long_form_alter(&$element, FormStateInterface $form_state, $context) {
+  _advanced_text_formatter_widget_alter($element, $form_state, $context);
+}
+
+/**
+ * Implements hook_field_widget_WIDGET_TYPE_form_alter().
+ */
+function advanced_text_formatter_field_widget_text_textarea_with_summary_form_alter(&$element, FormStateInterface $form_state, $context) {
+  _advanced_text_formatter_widget_alter($element, $form_state, $context);
+}
+
+function _advanced_text_formatter_widget_alter(&$element, FormStateInterface $form_state, $context) {
+  if (isset($element['#type']) && $element['#type'] == 'text_format') {
+    _advanced_text_formatter_widget_text_format_alter($element, $form_state, $context);
+  }
+  elseif (isset($element['value']) && isset($element['value']['#type'])) {
+    switch ($element['value']['#type']) {
+      case 'textfield':
+        _advanced_text_formatter_widget_textfield_alter($element, $form_state, $context);
+        break;
+
+      case 'textarea':
+        _advanced_text_formatter_widget_textarea_alter($element, $form_state, $context);
+        break;
+    }
+  }
+}
+
+function _advanced_text_formatter_widget_textfield_alter(&$element, FormStateInterface $form_state, $context) {
+  $widget = $context['widget'];
+
+  if (!\Drupal::moduleHandler()->moduleExists('token') || !_advanced_text_formatter_show_token_tree($widget)) {
+    return;
+  }
+
+  $entity_type = $context['items']->getEntity()->getEntityTypeId();
+  $description = trim($element['#description']);
+
+  if (!empty($description)) {
+    if (mb_substr($description, -1) != '.') {
+      $description .= '. ';
+    }
+    else {
+      $description .= ' ';
+    }
+  }
+
+  $description .= _advanced_text_formatter_browse_tokens($entity_type);
+
+  $element['#description'] = $description;
+  $element['value']['#description'] = $description;
+}
+
+function _advanced_text_formatter_widget_textarea_alter(&$element, FormStateInterface $form_state, $context) {
+  $widget = $context['widget'];
+
+  if (!\Drupal::moduleHandler()->moduleExists('token') || !_advanced_text_formatter_show_token_tree($widget)) {
+    return;
+  }
+
+  $entity_type = $context['items']->getEntity()->getEntityTypeId();
+  $description = trim($element['#description']);
+
+  if (!empty($description)) {
+    if (substr($description, -1) != '.') {
+      $description .= '. ';
+    }
+    else {
+      $description .= ' ';
+    }
+  }
+
+  $description .= _advanced_text_formatter_browse_tokens($entity_type);
+
+  $element['#description'] = $description;
+  $element['value']['#description'] = $description;
+}
+
+function _advanced_text_formatter_widget_text_format_alter(&$element, FormStateInterface $form_state, $context) {
+  $widget = $context['widget'];
+
+  if (!\Drupal::moduleHandler()->moduleExists('token') || !_advanced_text_formatter_show_token_tree($widget)) {
+    return;
+  }
+
+  if (empty($element['#pre_render'])) {
+    $info = element_info('text_format');
+    $element['#pre_render'] = empty($info['#pre_render']) ? array() : $info['#pre_render'];
+  }
+	$element['#entity_type'] = $context['items']->getFieldDefinition()->getTargetEntityTypeId();
+
+  $element['#pre_render'][] = '_advanced_text_formatter_field_add_token_tree';
+}
+
+/**
+ * Implements hook_field_widget_third_party_settings_form().
+ */
+function advanced_text_formatter_field_widget_third_party_settings_form(WidgetInterface $plugin, FieldDefinitionInterface $field_definition, $form_mode, $form, FormStateInterface $form_state) {
+  $element = array();
+
+  if (\Drupal::moduleHandler()->moduleExists('token')) {
+    switch ($plugin->getPluginId()) {
+      case 'string_textfield':
+      case 'string_textarea':
+      case 'text_textfield':
+      case 'text_textarea':
+      case 'text_textarea_with_summary':
+        $element['show_token_tree'] = array(
+          '#type'          => 'checkbox',
+          '#title'         => t("Show available tokens in field's description"),
+          '#return_value'  => 1,
+          '#default_value' => _advanced_text_formatter_show_token_tree($plugin),
+        );
+
+        break;
+    }
+  }
+
+  return $element;
+}
+
+/**
+ * Implements hook_field_widget_settings_summary_alter().
+ */
+function advanced_text_formatter_field_widget_settings_summary_alter(&$summary, $context) {
+  if (!\Drupal::moduleHandler()->moduleExists('token')) {
+    return;
+  }
+
+  $widget      = $context['widget'];
+  $widget_type = $widget->getPluginId();
+
+  switch ($widget_type) {
+    case 'string_textfield':
+    case 'string_textarea':
+    case 'text_textfield':
+    case 'text_textarea':
+    case 'text_textarea_with_summary':
+      if (_advanced_text_formatter_show_token_tree($widget)) {
+        $summary[] = t("Show available tokens in field's description");
+      }
+
+      break;
+  }
+}
+
+/**
+ * Trim text.
+ *
+ * @param string $text
+ *   The string is being trimmed.
+ *
+ * @param array $options
+ *   An associative array containing:
+ *   - html: TRUE means that text is in HTML.
+ *   - max_length: The maximum number of characters the a field can be.
+ *   - word_boundary: If checked, this field be trimmed only on a word boundary.
+ *   - ellipsis: If TRUE, a "..." will be added if a field was trimmed.
+ *
+ * @return string
+ *   The trimmed string.
+ */
+function advanced_text_formatter_trim_text($text, $options) {
+  if (!isset($options['html'])) {
+    $options['html'] = TRUE;
+  }
+
+  if (mb_strlen($text) > $options['max_length']) {
+    $text = mb_substr($text, 0, $options['max_length']);
+
+    if (!empty($options['word_boundary'])) {
+      $regex = "(.*)\b.+";
+
+      if (function_exists('mb_ereg')) {
+        mb_regex_encoding('UTF-8');
+        $found = mb_ereg($regex, $text, $matches);
+      }
+      else {
+        $found = preg_match("/$regex/us", $text, $matches);
+      }
+
+      if ($found) {
+        $text = $matches[1];
+      }
+    }
+
+    // Remove scraps of HTML entities from the end of a strings.
+    $text = rtrim(preg_replace('/(?:<(?!.+>)|&(?!.+;)).*$/us', '', $text));
+
+    if (!empty($options['ellipsis'])) {
+      $text .= t('...');
+    }
+  }
+
+  if (!empty($options['html'])) {
+    $text = Html::normalize($text);
+  }
+
+  return $text;
+}
+
+/**
+ * Get a link to browse for available tokens.
+ *
+ * @param mixed $token_types
+ *   A string or array contains the token types. See theme_token_tree() for more
+ *   details.
+ *
+ * @return string
+ *   A HTML link
+ */
+function _advanced_text_formatter_browse_tokens($token_types) {
+  if (!\Drupal::moduleHandler()->moduleExists('token')) {
+    return;
+  }
+
+  if (!is_array($token_types)) {
+    $token_types = array($token_types);
+  }
+
+  $vars['token_types'] = $token_types;
+
+  return \Drupal::theme()->render('token_tree_link', $vars);
+}
+
+/**
+ * Check if we should display the token tree or not.
+ *
+ * @param  WidgetInterface $widget
+ *   Widget.
+ *
+ * @return bool
+ *   TRUE or FALSE.
+ */
+function _advanced_text_formatter_show_token_tree($widget) {
+  return $widget->getThirdPartySetting('advanced_text_formatter', 'show_token_tree');
+}
+
+/**
+ * Add available tokens link to text_format element.
+ *
+ * @param array $element
+ *   Form element
+ *
+ * @return array
+ *   Form element
+ */
+function _advanced_text_formatter_field_add_token_tree($element) {
+  $element['format']['show_token'] = array(
+    '#type' => 'container',
+    'link'  => array(
+      '#markup' => _advanced_text_formatter_browse_tokens($element['#entity_type']),
+    ),
+    '#attributes' => array(
+      'class' => array('clearfix'),
+    ),
+    '#weight' => 99,
+  );
+
+  return $element;
+}
+
+/**
+ * Change tags from string to array to speed up the formatter view.
+ *
+ * @param array $element
+ *   Form element.
+ *
+ * @param array $form_state
+ *   Form state.
+ */
+function _advanced_text_formatter_validate_allowed_html($element, FormStateInterface $form_state) {
+  $tags  = array();
+  $value = isset($element['#value']) ? trim($element['#value']) : '';
+
+  if (!empty($value)) {
+    $tags = preg_split('/\s+|<|>/', $value, -1, PREG_SPLIT_NO_EMPTY);
+  }
+
+  $form_state->setValue($element['#parents'], $tags);
+}

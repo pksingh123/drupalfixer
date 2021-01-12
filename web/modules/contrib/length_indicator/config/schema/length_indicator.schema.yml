@@ -1,0 +1,20 @@
+field.widget.third_party.length_indicator:
+  type: mapping
+  label: 'Length indicator third party widget settings'
+  mapping:
+    indicator:
+      type: boolean
+      label: 'Determines if it is active'
+    indicator_opt:
+      type: mapping
+      label: 'Length indicator options'
+      mapping:
+        optimin:
+          type: integer
+          label: 'The minimum length of a good value'
+        optimax:
+          type: integer
+          label: 'The maximum length of a good value'
+        tolerance:
+          type: integer
+          label: 'Tolerance'

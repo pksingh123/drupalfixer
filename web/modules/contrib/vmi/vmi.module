@@ -1,0 +1,87 @@
+<?php
+
+/**
+ * @file
+ * Display Suite core functions.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\vmi\ViewModesInventoryFactory;
+
+/**
+ * Implements hook_help().
+ */
+function vmi_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.vmi':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<br/>' . t('The <a href="https://www.drupal.org/project/vmi">View modes inventory</a> module has a set of template view modes that we typically use (some of them) in each website.');
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_form_entity_view_display_edit_form_alter().
+ */
+function vmi_form_entity_view_display_edit_form_alter(&$form, FormStateInterface $form_state) {
+
+  // Load the vmi admin theme library.
+  $form['#attached']['library'][] = 'vmi/vim_admin_theme';
+
+  // Apply the config for view modes inventory form entity view display.
+  $form['actions']['submit']['#submit'][] = '_vmi_form_entity_view_display_edit_form_submit';
+}
+
+/**
+ * Apply mapped view modes inventory form entity view display edit form submit.
+ */
+function _vmi_form_entity_view_display_edit_form_submit($form, FormStateInterface $form_state) {
+
+  if (isset($form['modes']['display_modes_custom'])) {
+
+    $vmi_factory = \Drupal::service('class_resolver')
+      ->getInstanceFromDefinition(ViewModesInventoryFactory::class);
+
+    // Entity type.
+    $entity_type = $form['#entity_type'];
+
+    // Bundle name.
+    $bundle_name = $form['#bundle'];
+
+    // View modes inventory list.
+    $vmi_list = $vmi_factory->getViewModesList();
+
+    // View modes inventory layouts mapping.
+    $vmi_layouts_mapping = $vmi_factory->getLayoutsMapping();
+
+    // Enabled view modes.
+    $enabled_view_modes = $form['modes']['display_modes_custom']['#default_value'];
+
+    // Current selected view modes.
+    $selected_view_modes = $form['modes']['display_modes_custom']['#value'];
+
+    if (isset($vmi_list['view_modes'])
+        && isset($vmi_layouts_mapping['mapping'])) {
+
+      foreach ($selected_view_modes as $selected_view_mode) {
+        // Only when we do hava a new selected view mode inventory.
+        if (!in_array($selected_view_mode, $enabled_view_modes)
+           && isset($vmi_list['view_modes'][$selected_view_mode])
+           && isset($vmi_layouts_mapping['mapping'][$selected_view_mode])
+           && isset($vmi_layouts_mapping['mapping'][$selected_view_mode]['layout'])
+           && isset($vmi_layouts_mapping['mapping'][$selected_view_mode]['config_template'])
+           && isset($vmi_layouts_mapping['mapping'][$selected_view_mode]['config_name'])) {
+
+          $default_mapped_layout = $vmi_layouts_mapping['mapping'][$selected_view_mode]['layout'];
+          $config_template_file = $vmi_layouts_mapping['mapping'][$selected_view_mode]['config_template'];
+          $config_name = $vmi_layouts_mapping['mapping'][$selected_view_mode]['config_name'];
+
+          $vmi_factory->mapViewModeWithLayout($selected_view_mode, $default_mapped_layout, $entity_type, $bundle_name, $config_template_file, $config_name);
+
+        }
+      }
+    }
+  }
+}

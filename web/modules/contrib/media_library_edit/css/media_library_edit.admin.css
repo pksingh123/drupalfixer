@@ -1,0 +1,22 @@
+.media-library-edit__link {
+  position: absolute;
+  z-index: 1;
+  top: 40px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  margin: 5px;
+  padding: 0;
+  transition: 0.2s border-color;
+  color: transparent;
+  border: 2px solid #ccc;
+  border-radius: 20px;
+  background: url(../../../../core/misc/icons/787878/pencil.svg) #fff center no-repeat;
+  background-size: 16px 16px;
+  text-shadow: none;
+  box-sizing: border-box;
+}
+
+.media-library-edit__link:hover {
+   color: transparent;
+}

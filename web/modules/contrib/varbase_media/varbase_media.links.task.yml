@@ -1,0 +1,4 @@
+varbase_bootstrap_paragraphs.settings:
+  title: 'Varbase Bootstrap Paragraphs settings'
+  route_name: varbase_core.settings_index
+  base_route: varbase_bootstrap_paragraphs.settings

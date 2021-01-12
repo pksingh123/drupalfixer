@@ -1,0 +1,5 @@
+entity.script.collection:
+  title: JavaScript Snippets
+  description: 'Manage HTML snippets included in the page.'
+  route_name: entity.script.collection
+  parent: system.admin_structure
