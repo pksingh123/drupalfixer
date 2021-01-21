@@ -1,0 +1,4 @@
+administer sticky:
+  title: 'Administer Sticky'
+  description: 'Administer the Sticky configuration'
+  restrict access: TRUE

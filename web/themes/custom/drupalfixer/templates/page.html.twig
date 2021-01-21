@@ -156,7 +156,14 @@
         {% endblock %}
       {% endif %}
 	  
-	  
+	  {# Bottom Content #}
+      {% if page.bottom_content %}
+        {% block bottom_content %}
+          <div class="col-sm-12" role="heading">
+            {{ page.bottom_content }}
+          </div>
+        {% endblock %}
+      {% endif %} 
     </div>
   </div>
 {% endblock %}

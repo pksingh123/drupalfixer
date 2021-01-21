@@ -1,0 +1,4 @@
+services:
+  sticky.manager:
+    class: Drupal\sticky\Manager\StickyManager
+    arguments: ['@config.factory']

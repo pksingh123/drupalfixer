@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'ArithmeticError' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
     'AssertionError' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
+    'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'DivisionByZeroError' => $vendorDir . '/symfony/polyfill-php70/Resources/stubs/DivisionByZeroError.php',
     'Drupal' => $baseDir . '/web/core/lib/Drupal.php',
     'Drupal\\Component\\Utility\\Timer' => $baseDir . '/web/core/lib/Drupal/Component/Utility/Timer.php',

@@ -1,0 +1,6 @@
+sticky.configuration_form:
+  title: Sticky
+  description: 'Configure Sticky'
+  route_name: sticky.sticky_settings_form
+  parent: system.admin_config_system
+  weight: 99

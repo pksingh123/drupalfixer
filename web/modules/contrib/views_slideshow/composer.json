@@ -1,0 +1,22 @@
+{
+  "name": "drupal/views_slideshow",
+  "description": "Describes relationships between entities.",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://www.drupal.org/project/views_slideshow",
+  "authors": [
+    {
+      "name": "Neslee Canil Pinto",
+      "homepage": "https://www.drupal.org/u/neslee-canil-pinto",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/views_slideshow",
+    "irc": "irc://irc.freenode.org/drupal-contribute",
+    "source": "https://git.drupalcode.org/project/views_slideshow"
+  },
+  "require": {
+    "drupal/core": "^8 || ^9"
+  }
+}

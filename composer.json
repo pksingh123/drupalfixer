@@ -32,9 +32,11 @@
         "drupal/pathauto": "^1.8",
         "drupal/restui": "^1.19",
         "drupal/simple_popup_blocks": "^2.3",
+        "drupal/sticky": "^1.1",
         "drupal/taxonomy_menu": "^3.4",
         "drupal/varbase_blog": "^8.6",
         "drupal/views_infinite_scroll": "^1.7",
+        "drupal/views_slideshow": "^4.8",
         "drupal/webform": "^5.22"
     },
     "conflict": {

@@ -1,0 +1,26 @@
+{
+    "name": "drupal/views_slideshow_cycle",
+    "description": "Cycle plugin for Views Slideshow.",
+    "type": "drupal-module",
+    "license": "GPL-2.0+",
+    "homepage": "https://www.drupal.org/project/views_slideshow",
+    "authors": [
+      {
+        "name": "See contributors",
+        "homepage": "https://www.drupal.org/node/160350/committers"
+      }
+    ],
+    "support": {
+      "issues": "https://www.drupal.org/project/issues/views_slideshow",
+      "irc": "irc://irc.freenode.org/drupal-contribute",
+      "source": "https://git.drupalcode.org/project/views_slideshow"
+    },
+    "require": {},
+    "extra": {
+      "drush": {
+        "services": {
+          "drush.services.yml": "^9"
+        }
+      }
+    }
+}

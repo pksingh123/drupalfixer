@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Contains sticky.module..
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function sticky_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the sticky module.
+    case 'help.page.sticky':
+      $output = file_get_contents(drupal_get_path('module', 'sticky') . '/README.txt');
+      return '<pre>' . $output . '</pre>';
+    default:
+  }
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function sticky_page_attachments(array &$attachments) {
+  /** @var \Drupal\sticky\Manager\StickyManager $manager */
+  $manager = Drupal::service('sticky.manager');
+
+  // Pass the sticky settings.
+  $attachments['#attached']['drupalSettings']['sticky'] = $manager->getJsSettings();
+
+  // Load the sticky js library.
+  $attachments['#attached']['library'][] = 'sticky/sticky';
+}

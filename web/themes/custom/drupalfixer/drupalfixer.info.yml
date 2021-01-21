@@ -15,6 +15,7 @@ regions:
   content: 'Content'
   sidebar_first: 'Primary'
   sidebar_second: 'Secondary'
+  bottom_content: 'Bottom Bar'
   featuer_first: 'Featuer First'
   featuer_second: 'Featuer Second'
   featuer_thired: 'Featuer Thired'

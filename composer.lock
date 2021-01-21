@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "37b8dd8c474bd29c19596fabf9fa15ea",
+    "content-hash": "3d469b73177a148f50211ecdcbd748d2",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4731,6 +4731,50 @@
             }
         },
         {
+            "name": "drupal/sticky",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/sticky.git",
+                "reference": "8.x-1.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/sticky-8.x-1.1.zip",
+                "reference": "8.x-1.1",
+                "shasum": "98735598ba94c5ef2c0ae2ee77717174994724a4"
+            },
+            "require": {
+                "drupal/core": "~8.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.1",
+                    "datestamp": "1491909243",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "f0ns",
+                    "homepage": "https://www.drupal.org/user/723426"
+                }
+            ],
+            "description": "Sticky is a module that gives you the ability to make any element on your website to always stay visible.",
+            "homepage": "https://www.drupal.org/project/sticky",
+            "support": {
+                "source": "https://git.drupalcode.org/project/sticky"
+            }
+        },
+        {
             "name": "drupal/taxonomy_menu",
             "version": "3.4.0",
             "source": {
@@ -5438,6 +5482,69 @@
             "homepage": "https://www.drupal.org/project/views_infinite_scroll",
             "support": {
                 "source": "https://git.drupalcode.org/project/views_infinite_scroll"
+            }
+        },
+        {
+            "name": "drupal/views_slideshow",
+            "version": "4.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/views_slideshow.git",
+                "reference": "8.x-4.8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/views_slideshow-8.x-4.8.zip",
+                "reference": "8.x-4.8",
+                "shasum": "88104843df5e2eaa7e70b796a80573d844583e42"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-4.8",
+                    "datestamp": "1601309225",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Neslee Canil Pinto",
+                    "homepage": "https://www.drupal.org/u/neslee-canil-pinto",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "NickDickinsonWilde",
+                    "homepage": "https://www.drupal.org/user/3094661"
+                },
+                {
+                    "name": "aaron",
+                    "homepage": "https://www.drupal.org/user/33420"
+                },
+                {
+                    "name": "redndahead",
+                    "homepage": "https://www.drupal.org/user/160320"
+                },
+                {
+                    "name": "vbouchet",
+                    "homepage": "https://www.drupal.org/user/1671428"
+                }
+            ],
+            "description": "Describes relationships between entities.",
+            "homepage": "https://www.drupal.org/project/views_slideshow",
+            "support": {
+                "source": "https://git.drupalcode.org/project/views_slideshow",
+                "issues": "https://www.drupal.org/project/issues/views_slideshow",
+                "irc": "irc://irc.freenode.org/drupal-contribute"
             }
         },
         {
@@ -8827,5 +8934,6 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": [],
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
 }

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Views Slideshow</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="views-slideshow">Views Slideshow</h1>
+<h2 id="introduction">INTRODUCTION</h2>
+<p>Views Slideshow can create slideshows out any content on your Drupal site - whether that is images, images on content or full rendered entities. The <code>views_slideshow</code> module provides a base/plugin system/api for building full featured slideshows within the Views UI. This project also includes a module implementing that base; <code>views_slideshow_cycle</code>. For most users, you’ll just want to enable both of them and install pre-reqs. For advanced users you can create your own implementation - and there are other implementations for Drupal 7 available (see below).</p>
+<p>Built in and most/all of the implementations are powered by jQuery, and are highly customizable: you may choose slideshow settings for each View display you create.</p>
+<h3 id="potential-uses">Potential Uses</h3>
+<ul>
+<li>News item slideshow (such as the title, image and teaser of the last 5 news articles submitted)</li>
+<li>The Last X number of X submitted (images, videos, blog entries, forum posts, comments, testimonials, etc.).</li>
+<li>Rotate any image, based on any filters you can apply in views.</li>
+<li>Hottest new products for any ecommerce drupal site.</li>
+<li>Rotate contact links, share links, etc.</li>
+<li>You can even rotate entire nodes, categories, image galleries, etc.</li>
+<li>It’s also a great space saver. Places where you had multiple images or items such as RSS feeds or category listings can now be presented in a slideshow.</li>
+</ul>
+<h2 id="requirements">REQUIREMENTS</h2>
+<ul>
+<li>Views Slideshow 8.x-4.x requires Drupal 8 &amp; the core Views module enabled.</li>
+<li>There is no upgrade path from Views Slideshow for Drupal 7.</li>
+<li>Views Slideshow Cycle (Which most users should use) requires some JavaScript libraries:
+<ul>
+<li><a href="https://github.com/malsup/cycle">jQuery Cycle 3.x</a></li>
+<li><a href="https://github.com/douglascrockford/JSON-js">JSON2</a></li>
+<li><a href="https://github.com/briancherne/jquery-hoverIntent">jQuery HoverIntent</a></li>
+<li><a href="https://github.com/tobia/Pause">jQuery Pause</a></li>
+</ul></li>
+</ul>
+<h2 id="installation">INSTALLATION</h2>
+<p>Install as you would normally install a contributed Drupal module. See the <a href="https://drupal.org/documentation/install/modules-themes/modules-8">Drupal 8 Instructions</a> if required in the Drupal documentation for further information. Note there are two modules included in this project; Views Slideshow &amp; Views Slideshow Cycle. In most cases you will need/want to enable both of them.</p>
+<p>If you are using the Views Slideshow Cycle sub-module, you will also need to install some JavaScript libraries. The required libraries are:</p>
+<ul>
+<li><a href="https://github.com/malsup/cycle">jQuery Cycle 3.x</a> in <code>/libraries/jquery.cycle</code></li>
+<li><a href="https://github.com/douglascrockford/JSON-js">JSON2</a> in <code>/libraries/json2</code></li>
+<li><a href="https://github.com/briancherne/jquery-hoverIntent">jQuery HoverIntent</a> in <code>/libraries/jquery.hoverIntent</code></li>
+<li><a href="https://github.com/tobia/Pause">jQuery Pause</a> in <code>/libraries/jquery.pause</code></li>
+</ul>
+<p>It is recommended to use <a href="https://drush.org">Drush</a> to automatically install the requirements to the right spot. To install all of the libraries to the right places, run <code>drush dl-cycle-lib</code>.</p>
+<p>If you don’t have Drush available, or would prefer to install manually, you can do so. An example of code you could run in your Drupal root dir to download to the right place:</p>
+<pre><code> mkdir -p libraries/jquery.cycle &amp;&amp; cd $_ &amp;&amp; wget https://malsup.github.io/jquery.cycle.all.js \
+ &amp;&amp; mkdir -p ../../libraries/jquery.hoverIntent &amp;&amp; cd $_ &amp;&amp; wget https://raw.githubusercontent.com/briancherne/jquery-hoverIntent/master/jquery.hoverIntent.js \
+ &amp;&amp; mkdir -p ../../libraries/json2 &amp;&amp; cd $_ &amp;&amp; wget https://raw.githubusercontent.com/douglascrockford/JSON-js/master/json2.js \
+ &amp;&amp; mkdir -p ../../libraries/jquery.pause &amp;&amp; cd $_ &amp;&amp; wget https://raw.githubusercontent.com/tobia/Pause/master/jquery.pause.js</code></pre>
+<h2 id="configuration">CONFIGURATION</h2>
+<p>Configuration is on a per view/display basis.</p>
+<p>Most standard views settings will work fine in conjunction with Views Slideshow. However, grouping may or may not work. Under most use cases the pager should be set to either <code>Display a specified number of items</code> or <code>Display all</code>.</p>
+<p>To get started configuring your slideshow, set <code>Slideshow</code> as the display format and configure the slideshow as desired under Format Settings. Next select the <em>Skin</em> - usually <code>Default</code> (only one provided with the module). Then select the <em>Slideshow Type</em>; for most users, this will just be <code>cycle</code> with the <code>views_slideshow_cycle</code> module.</p>
+<p>Below that, there is a lot of different options which should have better documentation.</p>
+<h3 id="see-also">See also:</h3>
+<ul>
+<li><a href="https://www.ostraining.com/blog/drupal/drupal-8-slideshows">OS Training tutorial on Views Slideshow</a></li>
+</ul>
+<h2 id="contributors">CONTRIBUTORS</h2>
+<p>Current maintainer:</p>
+<ul>
+<li><a href="https://www.drupal.org/u/neslee-canil-pinto">Neslee Canil Pinto</a></li>
+</ul>
+<p>Past maintainers:</p>
+<ul>
+<li><p><a href="https://www.drupal.org/u/vbouchet">vbouchet</a> Initial 8.x port</p></li>
+<li><p><a href="https://www.drupal.org/u/redndahead">Adam Moore</a></p></li>
+<li><a href="https://www.drupal.org/u/nickwilde">Nick Wilde</a></li>
+</ul>
+<p>Also, thanks to the many contributors via the issue queues.</p>
+</body>
+</html>

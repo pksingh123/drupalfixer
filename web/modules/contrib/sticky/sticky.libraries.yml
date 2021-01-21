@@ -1,0 +1,14 @@
+sticky:
+  version: VERSION
+  js:
+    js/sticky.js: {}
+  dependencies:
+    - sticky/sticky.library
+sticky.library:
+  version: VERSION
+  js:
+    /libraries/sticky/jquery.sticky.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/drupalSettings

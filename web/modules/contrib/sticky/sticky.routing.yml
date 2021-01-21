@@ -1,0 +1,7 @@
+sticky.sticky_settings_form:
+  path: '/admin/config/system/sticky'
+  defaults:
+    _form: '\Drupal\sticky\Form\StickyConfigurationForm'
+    _title: 'Sticky configuration'
+  requirements:
+    _permission: 'administer sticky'
