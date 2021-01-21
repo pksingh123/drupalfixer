@@ -813,3 +813,7 @@ $settings['trusted_host_patterns'] = array(
   '^.+\.drupalfixer\.com$',
   '^.+\.drupalfixer\.com\.web$',
   );
+if (isset($GLOBALS['request']) and
+'/web/index.php' === $GLOBALS['request']->server->get('SCRIPT_NAME')) {
+$GLOBALS['request']->server->set('SCRIPT_NAME', '/index.php');
+}
