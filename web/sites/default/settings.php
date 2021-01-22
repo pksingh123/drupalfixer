@@ -796,9 +796,9 @@ $settings['migrate_node_migrate_type_classic'] = FALSE;
 #   include $app_root . '/' . $site_path . '/settings.local.php';
 # }
 $databases['default']['default'] = array (
-  'database' => 'df',
+  'database' => 'drupalfixer',
   'username' => 'root',
-  'password' => '',
+  'password' => 'QDPGZtdov4nt',
   'prefix' => '',
   'host' => 'localhost',
   'port' => '3306',
@@ -807,3 +807,13 @@ $databases['default']['default'] = array (
 );
 $settings['config_sync_directory'] = 'sites/default/files/config_ZHLdbxk0Utk1UfBbLb1RyviwhrPVpimpMeSXB_QhHxqOiBcpBazjPQmC7GdAGDx4oAe5q_zm8w/sync';
 #$config['system.logging']['error_level'] = 'verbose';
+$settings['trusted_host_patterns'] = array(
+  '^drupalfixer\.com$',
+  '^drupalfixer\.com\.web$',
+  '^.+\.drupalfixer\.com$',
+  '^.+\.drupalfixer\.com\.web$',
+  );
+if (isset($GLOBALS['request']) &&
+'/web/index.php' === $GLOBALS['request']->server->get('SCRIPT_NAME')) {
+$GLOBALS['request']->server->set('SCRIPT_NAME', '/index.php');
+}
