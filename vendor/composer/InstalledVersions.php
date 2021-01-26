@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '9b594a3347175256a3ff0b7ab468f788d289c6ac',
+    'reference' => '0f3c72379b6e2d55171ae72acaeebde3ee70d478',
     'name' => 'drupal/recommended-project',
   ),
   'versions' => 
@@ -132,6 +132,15 @@ private static $installed = array (
       array (
       ),
       'reference' => '1febd6c3ef84253d7c815bed85fc622ad207a9f8',
+    ),
+    'drupal-ckeditor-libraries-group/codesnippet' => 
+    array (
+      'pretty_version' => '4.14.1',
+      'version' => '4.14.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '940d45c76cbfc4e2ff0d65c0b41ddd42660bc5d7',
     ),
     'drupal/action' => 
     array (
@@ -300,6 +309,15 @@ private static $installed = array (
       array (
         0 => '8.9.11',
       ),
+    ),
+    'drupal/codesnippet' => 
+    array (
+      'pretty_version' => '1.7.0',
+      'version' => '1.7.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '8.x-1.7',
     ),
     'drupal/coffee' => 
     array (
@@ -1200,7 +1218,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '9b594a3347175256a3ff0b7ab468f788d289c6ac',
+      'reference' => '0f3c72379b6e2d55171ae72acaeebde3ee70d478',
     ),
     'drupal/redirect' => 
     array (
