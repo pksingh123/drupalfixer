@@ -273,9 +273,29 @@ body.path-frontpage .main-container {}
     margin-top: 55px;
     margin-bottom: 1em;
 }
-block-views-blocktestimonials-block-1 .view-content {
+.block-views-blocktestimonials-block-1 .view-content {
     width: 60%;
     margin: 0 auto;
+}
+.block-views-blocktestimonials-block-1 .view-content .owl-wrapper .owl-item .views-field-field-user-comment .field-content::before {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    content: "“";
+    font-size: 72px;
+    color: rgb(44, 132, 198);
+}
+.block-views-blocktestimonials-block-1 .view-content .owl-wrapper .owl-item .views-field-field-user-comment .field-content::after {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    content: "”";
+    font-size: 72px;
+    color: rgb(44, 132, 198);
+}
+.block-views-blocktestimonials-block-1 .view-content .owl-wrapper .owl-item .views-field-field-user-comment .field-content p {
+    font-size: 16px;
+    text-align: center;
 }
 #block-howtogetstarted{
     min-height: 300px;
