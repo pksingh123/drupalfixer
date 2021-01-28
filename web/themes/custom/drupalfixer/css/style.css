@@ -266,7 +266,7 @@ body.path-frontpage .main-container {}
 }
 #block-howtogetstarted{
     min-height: 300px;
-    background: transparent url(/themes/custom/drupalfixer/css/../images/back-how-to-get.png) no-repeat;
+    background: transparent url(/themes/custom/drupalfixer/css/images/back-how-to-get.png) no-repeat;
     background-size: cover;
 }
 #block-howtogetstarted .field--type-text-with-summary .get_started {
